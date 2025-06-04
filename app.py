@@ -423,8 +423,15 @@ class TelegramBot:
         self._setup_handlers()
 
     def _setup_handlers(self):
-        # Весь код для обработки сообщений
-        pass
+        self.dp.message(Command("start"))(self._cmd_start)
+        self.dp.message()(self._handle_message)
+
+    async def _cmd_start(self, message: types.Message):
+        await message.answer("Привет! Напишите свой запрос.")
+
+    async def _handle_message(self, message: types.Message):
+        answer, _, _ = self.orch.process_message(message.from_user.id, message.text)
+        await message.answer(answer)
 
     async def run(self):
         await self.dp.start_polling(self.bot, skip_updates=True)
