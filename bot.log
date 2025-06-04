@@ -4,3 +4,6 @@
 [2025-06-05 00:56:41,463] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
 [2025-06-05 00:56:42,384] ERROR: Fatal error: TelegramBot.__init__() missing 3 required positional arguments: 'token', 'data_files', and 'data_descriptions'
 [2025-06-05 01:04:38,581] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-05 01:17:33,637] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-05 01:17:34,706] ERROR: Отсутствуют файлы данных: data\mo_ref.xlsx
+[2025-06-05 01:17:34,706] ERROR: Fatal error: Отсутствуют файлы данных: data\mo_ref.xlsx

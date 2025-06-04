@@ -8,6 +8,7 @@ from pathlib import Path
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
+from aiogram.client.bot import DefaultBotProperties
 
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
@@ -406,6 +407,7 @@ class OrchestratorAgent:
 
 
 # === TelegramBot (Aiogram) ===
+# === TelegramBot (Aiogram) ===
 class TelegramBot:
     def __init__(self, token: str, data_files: dict, data_descriptions: dict):
         self.token = token
@@ -414,7 +416,10 @@ class TelegramBot:
         default_props = DefaultBotProperties(parse_mode='HTML')
         self.bot = Bot(self.token, default=default_props)
         self.dp = Dispatcher()
-        self.orch = Orchestrator()
+        self.orch = OrchestratorAgent(
+            data_files=self.data_files,
+            data_descriptions=self.data_descriptions,
+        )
         self._setup_handlers()
 
     def _setup_handlers(self):
@@ -424,19 +429,18 @@ class TelegramBot:
     async def run(self):
         await self.dp.start_polling(self.bot, skip_updates=True)
 
-def main():
-        try:
-            bot = TelegramBot()
-            asyncio.run(bot.run())  # Запуск бота и начало обработки сообщений
-        except Exception as e:
-            logging.error('Fatal error: %s', e)
+def main() -> None:
+    """Запуск телеграм-бота с параметрами из конфигурации."""
+    try:
+        bot = TelegramBot(
+            token=TELEGRAM_TOKEN,
+            data_files=DATA_FILES,
+            data_descriptions=DATA_DESCRIPTIONS,
+        )
+        asyncio.run(bot.run())
+    except Exception as e:
+        logging.error("Fatal error: %s", e)
 
 # Передайте токен и другие параметры
 if __name__ == '__main__':
-    token = os.getenv('TELEGRAM_TOKEN')  # Токен из .env
-    bot = TelegramBot(
-        token=token,
-        data_files=DATA_FILES,
-        data_descriptions=DATA_DESCRIPTIONS
-    )
-    asyncio.run(bot.run())
+    main()
