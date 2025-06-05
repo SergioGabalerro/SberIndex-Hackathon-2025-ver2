@@ -2,6 +2,7 @@ import os
 import json
 import logging
 import pandas as pd
+import numpy as np
 import asyncio
 import re
 from pathlib import Path
@@ -12,6 +13,7 @@ from aiogram.client.bot import DefaultBotProperties
 
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
+import html
 
 # Импорт ChatOpenAI из актуального модуля langchain_openai
 from langchain_openai import ChatOpenAI
@@ -274,6 +276,8 @@ class AnswerGenerationAgent:
             "записывать итоговый результат в переменную result. "
             "Если нужно, добавляй комментарии. "
             "Не пиши пояснений, только сам код. "
+            "Перед приведением значений к целочисленному типу убирай или заменяй пропуски и бесконечные значения, "
+            "чтобы не возникала ошибка 'Cannot convert non-finite values to integer'."
         )
 
     def generate_and_execute(self, combined_df: pd.DataFrame, query: str) -> str:
@@ -295,7 +299,8 @@ class AnswerGenerationAgent:
         code_clean = re.sub(r'```(?:python)?', '', code_str).strip()
 
         # Подготовим локальную среду для выполнения
-        local_vars = {"df": combined_df.copy(), "pd": pd}
+        clean_df = combined_df.replace([np.inf, -np.inf], pd.NA).fillna(0)
+        local_vars = {"df": clean_df.copy(), "pd": pd, "np": np}
         try:
             # Выполняем код. Ожидаем, что в коде в конце появится переменная result.
             exec(code_clean, {}, local_vars)
@@ -431,7 +436,8 @@ class TelegramBot:
 
     async def _handle_message(self, message: types.Message):
         answer, _, _ = self.orch.process_message(message.from_user.id, message.text)
-        await message.answer(answer)
+        sanitized = html.escape(answer)
+        await message.answer(f"<pre>{sanitized}</pre>")
 
     async def run(self):
         await self.dp.start_polling(self.bot, skip_updates=True)

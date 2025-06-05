@@ -68,3 +68,313 @@ result = df[df['year'] == 2024].groupby('municipal_district_name')['value'].sum(
 [2025-06-05 01:28:54,795] INFO: Update id=526914519 is handled. Duration 4344 ms by bot id=7709142539
 [2025-06-05 01:30:01,005] INFO: Polling stopped
 [2025-06-05 01:30:01,257] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION - помощник по региональной аналитике.'
+[2025-06-05 16:37:30,225] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-05 16:37:32,895] INFO: [Классификатор] Инициализирован.
+[2025-06-05 16:37:35,691] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-05 16:37:35,856] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-05 16:37:35,889] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-05 16:37:36,000] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-05 16:37:36,063] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-05 16:37:37,604] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-05 16:37:37,604] INFO: [Поисковик] Инициализирован.
+[2025-06-05 16:37:37,604] INFO: [Генератор ответов] Инициализирован.
+[2025-06-05 16:37:37,604] INFO: [Контекст] Инициализирован.
+[2025-06-05 16:37:37,604] INFO: [Оркестратор] Инициализирован.
+[2025-06-05 16:37:37,606] INFO: Start polling
+[2025-06-05 16:37:38,056] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 16:37:38,531] INFO: Update id=526914521 is handled. Duration 327 ms by bot id=7709142539
+[2025-06-05 16:37:38,782] INFO: Update id=526914520 is handled. Duration 577 ms by bot id=7709142539
+[2025-06-05 16:37:38,795] INFO: Update id=526914522 is handled. Duration 593 ms by bot id=7709142539
+[2025-06-05 16:38:17,389] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-05 16:38:18,650] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:38:18,684] INFO: [LLM] Получен ответ: valid...
+[2025-06-05 16:38:18,684] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-05 16:38:19,660] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:38:19,662] INFO: [LLM] Получен ответ: {"datasets": ["population"]}...
+[2025-06-05 16:38:20,129] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из нескольких таблиц, объединённых...
+[2025-06-05 16:38:21,165] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:38:21,181] INFO: [LLM] Получен ответ: ```python
+result = df[df['year'] == 2024].groupby('municipal_district_name')['value'].sum().nsmalles...
+[2025-06-05 16:38:21,934] INFO: Update id=526914523 is handled. Duration 4545 ms by bot id=7709142539
+[2025-06-05 16:39:12,459] INFO: Polling stopped
+[2025-06-05 16:39:12,720] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 16:40:39,261] INFO: Инициализация GigaChat в качестве LLM
+[2025-06-05 16:40:39,983] INFO: [Классификатор] Инициализирован.
+[2025-06-05 16:40:40,031] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-05 16:40:40,153] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-05 16:40:40,178] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-05 16:40:40,262] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-05 16:40:40,325] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-05 16:40:41,048] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-05 16:40:41,048] INFO: [Поисковик] Инициализирован.
+[2025-06-05 16:40:41,048] INFO: [Генератор ответов] Инициализирован.
+[2025-06-05 16:40:41,048] INFO: [Контекст] Инициализирован.
+[2025-06-05 16:40:41,048] INFO: [Оркестратор] Инициализирован.
+[2025-06-05 16:40:41,048] INFO: Start polling
+[2025-06-05 16:40:41,414] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 16:40:42,118] INFO: Update id=526914524 is handled. Duration 594 ms by bot id=7709142539
+[2025-06-05 16:40:51,491] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-05 16:40:51,802] INFO: HTTP Request: POST https://ngw.devices.sberbank.ru:9443/api/v2/oauth "HTTP/1.1 200 OK"
+[2025-06-05 16:40:52,202] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:40:52,204] INFO: [LLM] Получен ответ: valid...
+[2025-06-05 16:40:52,204] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-05 16:40:52,425] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:40:52,425] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population"]}
+```...
+[2025-06-05 16:40:52,796] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из нескольких таблиц, объединённых...
+[2025-06-05 16:40:54,699] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:40:54,702] INFO: [LLM] Получен ответ: ```python
+# Фильтрация данных для года 2024
+df_filtered = df[df['year'] == 2024]
+
+# Выбор колонок, к...
+[2025-06-05 16:40:55,082] ERROR: Ошибка при выполнении сгенерированного кода: invalid syntax (<string>, line 15)
+[2025-06-05 16:40:55,254] INFO: Update id=526914525 is not handled. Duration 3765 ms by bot id=7709142539
+[2025-06-05 16:40:55,254] ERROR: Cause exception while process update id=526914525 by bot id=7709142539
+TelegramBadRequest: Telegram server says - Bad Request: can't parse entities: Unsupported start tag "string" at byte offset 67
+Traceback (most recent call last):
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 434, in _handle_message
+    await message.answer(answer)
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\methods\base.py", line 84, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\bot.py", line 478, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\session\base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\session\aiohttp.py", line 185, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\session\base.py", line 120, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: can't parse entities: Unsupported start tag "string" at byte offset 67
+[2025-06-05 16:41:48,406] INFO: Polling stopped
+[2025-06-05 16:41:48,655] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 16:43:25,686] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-05 16:43:26,879] INFO: [Классификатор] Инициализирован.
+[2025-06-05 16:43:26,920] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-05 16:43:27,040] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-05 16:43:27,060] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-05 16:43:27,148] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-05 16:43:27,204] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-05 16:43:27,869] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-05 16:43:27,870] INFO: [Поисковик] Инициализирован.
+[2025-06-05 16:43:27,870] INFO: [Генератор ответов] Инициализирован.
+[2025-06-05 16:43:27,870] INFO: [Контекст] Инициализирован.
+[2025-06-05 16:43:27,870] INFO: [Оркестратор] Инициализирован.
+[2025-06-05 16:43:27,871] INFO: Start polling
+[2025-06-05 16:43:28,286] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 16:43:28,967] INFO: Update id=526914526 is handled. Duration 547 ms by bot id=7709142539
+[2025-06-05 16:43:40,441] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-05 16:43:41,594] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:43:41,607] INFO: [LLM] Получен ответ: valid...
+[2025-06-05 16:43:41,607] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-05 16:43:42,100] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:43:42,104] INFO: [LLM] Получен ответ: {"datasets": ["population"]}...
+[2025-06-05 16:43:42,509] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из нескольких таблиц, объединённых...
+[2025-06-05 16:43:43,539] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:43:43,543] INFO: [LLM] Получен ответ: ```python
+result = df[df['year'] == 2024].groupby('municipal_district_name')['value'].sum().nsmalles...
+[2025-06-05 16:43:44,272] INFO: Update id=526914527 is handled. Duration 3844 ms by bot id=7709142539
+[2025-06-05 16:44:10,202] INFO: Polling stopped
+[2025-06-05 16:44:10,459] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 16:44:30,772] INFO: Инициализация GigaChat в качестве LLM
+[2025-06-05 16:44:31,135] INFO: [Классификатор] Инициализирован.
+[2025-06-05 16:44:31,175] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-05 16:44:31,284] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-05 16:44:31,306] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-05 16:44:31,380] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-05 16:44:31,424] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-05 16:44:32,059] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-05 16:44:32,059] INFO: [Поисковик] Инициализирован.
+[2025-06-05 16:44:32,059] INFO: [Генератор ответов] Инициализирован.
+[2025-06-05 16:44:32,059] INFO: [Контекст] Инициализирован.
+[2025-06-05 16:44:32,059] INFO: [Оркестратор] Инициализирован.
+[2025-06-05 16:44:32,061] INFO: Start polling
+[2025-06-05 16:44:32,501] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 16:44:46,855] INFO: Update id=526914528 is handled. Duration 672 ms by bot id=7709142539
+[2025-06-05 16:45:17,918] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-05 16:45:18,225] INFO: HTTP Request: POST https://ngw.devices.sberbank.ru:9443/api/v2/oauth "HTTP/1.1 200 OK"
+[2025-06-05 16:45:18,593] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:45:18,604] INFO: [LLM] Получен ответ: valid...
+[2025-06-05 16:45:18,604] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-05 16:45:18,826] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:45:18,829] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population"]}
+```...
+[2025-06-05 16:45:19,114] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из нескольких таблиц, объединённых...
+[2025-06-05 16:45:20,645] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 16:45:20,647] INFO: [LLM] Получен ответ: ```python
+# Выбираем только нужные столбцы для упрощения кода
+df = df[['territory_id', 'municipal_di...
+[2025-06-05 16:45:20,863] ERROR: Ошибка при выполнении сгенерированного кода: invalid syntax (<string>, line 15)
+[2025-06-05 16:45:21,034] INFO: Update id=526914529 is not handled. Duration 3125 ms by bot id=7709142539
+[2025-06-05 16:45:21,034] ERROR: Cause exception while process update id=526914529 by bot id=7709142539
+TelegramBadRequest: Telegram server says - Bad Request: can't parse entities: Unsupported start tag "string" at byte offset 67
+Traceback (most recent call last):
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 434, in _handle_message
+    await message.answer(answer)
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\methods\base.py", line 84, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\bot.py", line 478, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\session\base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\session\aiohttp.py", line 185, in make_request
+    response = self.check_response(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\session\base.py", line 120, in check_response
+    raise TelegramBadRequest(method=method, message=description)
+aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: can't parse entities: Unsupported start tag "string" at byte offset 67
+[2025-06-05 16:45:33,616] INFO: Polling stopped
+[2025-06-05 16:45:33,870] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 18:14:53,714] INFO: Инициализация GigaChat в качестве LLM
+[2025-06-05 18:14:54,077] INFO: [Классификатор] Инициализирован.
+[2025-06-05 18:14:54,122] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-05 18:14:54,238] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-05 18:14:54,261] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-05 18:14:54,368] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-05 18:14:54,435] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-05 18:14:55,159] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-05 18:14:55,160] INFO: [Поисковик] Инициализирован.
+[2025-06-05 18:14:55,160] INFO: [Генератор ответов] Инициализирован.
+[2025-06-05 18:14:55,160] INFO: [Контекст] Инициализирован.
+[2025-06-05 18:14:55,160] INFO: [Оркестратор] Инициализирован.
+[2025-06-05 18:14:55,161] INFO: Start polling
+[2025-06-05 18:14:55,612] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 18:15:00,836] INFO: Update id=526914533 is handled. Duration 610 ms by bot id=7709142539
+[2025-06-05 18:15:10,166] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-05 18:15:10,493] INFO: HTTP Request: POST https://ngw.devices.sberbank.ru:9443/api/v2/oauth "HTTP/1.1 200 OK"
+[2025-06-05 18:15:10,860] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 18:15:10,864] INFO: [LLM] Получен ответ: valid...
+[2025-06-05 18:15:10,864] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-05 18:15:11,079] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 18:15:11,083] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population"]}
+```...
+[2025-06-05 18:15:11,459] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из нескольких таблиц, объединённых...
+[2025-06-05 18:15:12,293] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 18:15:12,295] INFO: [LLM] Получен ответ: ```python
+# Фильтрация данных для периода 2024 года
+df_filtered = df[df['year'] == 2024]
+
+# Создание...
+[2025-06-05 18:15:12,727] ERROR: Ошибка при выполнении сгенерированного кода: Cannot convert non-finite values (NA or inf) to integer
+[2025-06-05 18:15:12,995] INFO: Update id=526914534 is handled. Duration 2827 ms by bot id=7709142539
+[2025-06-05 18:20:50,821] INFO: Polling stopped
+[2025-06-05 18:20:51,077] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 21:41:02,317] INFO: Инициализация GigaChat в качестве LLM
+[2025-06-05 21:41:04,050] INFO: [Классификатор] Инициализирован.
+[2025-06-05 21:41:08,037] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-05 21:41:08,417] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-05 21:41:08,479] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-05 21:41:08,669] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-05 21:41:08,795] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-05 21:41:10,811] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-05 21:41:10,811] INFO: [Поисковик] Инициализирован.
+[2025-06-05 21:41:10,811] INFO: [Генератор ответов] Инициализирован.
+[2025-06-05 21:41:10,811] INFO: [Контекст] Инициализирован.
+[2025-06-05 21:41:10,812] INFO: [Оркестратор] Инициализирован.
+[2025-06-05 21:41:10,813] INFO: Start polling
+[2025-06-05 21:41:11,054] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-05 21:41:11,592] INFO: Update id=526914535 is handled. Duration 469 ms by bot id=7709142539
+[2025-06-05 21:41:25,978] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-05 21:41:26,553] INFO: HTTP Request: POST https://ngw.devices.sberbank.ru:9443/api/v2/oauth "HTTP/1.1 200 OK"
+[2025-06-05 21:41:26,792] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 21:41:26,799] INFO: [LLM] Получен ответ: valid...
+[2025-06-05 21:41:26,799] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-05 21:41:26,995] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 21:41:26,997] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population"]}
+```...
+[2025-06-05 21:41:27,735] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из нескольких таблиц, объединённых...
+[2025-06-05 21:41:28,756] INFO: HTTP Request: POST https://gigachat.devices.sberbank.ru/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-05 21:41:28,759] INFO: [LLM] Получен ответ: ```python
+# Выбираем нужные столбцы
+df = df[['territory_id', 'municipal_district_name', 'shape_area'...
+[2025-06-05 21:41:33,453] ERROR: Ошибка при выполнении сгенерированного кода: "['shape_area'] not in index"
+[2025-06-05 21:41:33,759] INFO: Update id=526914536 is handled. Duration 7781 ms by bot id=7709142539
