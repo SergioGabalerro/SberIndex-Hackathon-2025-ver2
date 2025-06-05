@@ -110,7 +110,7 @@ def init_llm():
         logging.info("Инициализация ChatOpenAI (OpenAI) в качестве LLM")
         return ChatOpenAI(
             openai_api_key=OPENAI_API_KEY,
-            model_name="gpt-3.5-turbo",
+            model_name="gpt-4o",
             temperature=0.0,
             request_timeout=30
         )
@@ -119,7 +119,7 @@ def init_llm():
         return GigaChat(
             credentials=GIGACHAT_AUTH_KEY,
             verify_ssl_certs=False,
-            model="GigaChat",
+            model="GigaChat:2-Max",
             timeout=30
         )
 
@@ -258,7 +258,7 @@ class AnswerGenerationAgent:
         self.role = "Генератор ответов"
         logging.info(f"[{self.role}] Инициализирован.")
 
-    def _build_prompt_for_code(self, query: str, available_columns: list) -> str:
+    def _build_prompt_for_code(self, query: str, available_columns: list, datasets: list) -> str:
         """
         Строим prompt, чтобы LLM вернул фрагмент Pandas-кода,
         который обрабатывает переменную df (объединённый DataFrame)
@@ -266,34 +266,33 @@ class AnswerGenerationAgent:
         Также перечисляем доступные колонки для контекста.
         """
         cols_list = ", ".join(available_columns)
+        datasets_str = ", ".join(datasets)
         return (
-            "У тебя есть pandas DataFrame с именем df, который содержит данные из нескольких таблиц, "
-            "объединённых по ключу territory_id. \n"
-            f"Доступные колонки в этом DataFrame: {cols_list}.\n\n"
-            f"Пользовательский запрос: «{query}».\n\n"
-            "Твоя задача — написать Python-код на pandas, который выполняет вычисления или фильтрацию, "
-            "чтобы ответить на этот запрос. Код должен использовать df и в конце "
-            "записывать итоговый результат в переменную result. "
-            "Если нужно, добавляй комментарии. "
-            "Не пиши пояснений, только сам код. "
+            "У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: "
+            f"{datasets_str}. Данные объединены по ключу territory_id.\n"
+            f"Доступные колонки: {cols_list}.\n\n"
+            f"Запрос пользователя: «{query}».\n\n"
+            "Нужно написать только Python-код на pandas, который даст ответ на запрос, "
+            "используя df и сохраняя итог в переменную result. "
+            "Добавляй комментарии при необходимости, но не включай пояснений вне кода. "
             "Перед приведением значений к целочисленному типу убирай или заменяй пропуски и бесконечные значения, "
             "чтобы не возникала ошибка 'Cannot convert non-finite values to integer'."
         )
 
-    def generate_and_execute(self, combined_df: pd.DataFrame, query: str) -> str:
+    def generate_and_execute(self, combined_df: pd.DataFrame, query: str, datasets: list) -> tuple[str, object]:
         """
         Запрашиваем у LLM код, исполняем его и возвращаем результат в удобном формате.
         """
         if combined_df.empty:
-            return "Данные оказались пустыми после объединения. Нечего обрабатывать."
+            return "Данные оказались пустыми после объединения. Нечего обрабатывать.", None
 
         # Составляем список доступных колонок
         available_columns = list(combined_df.columns)
-        prompt = self._build_prompt_for_code(query, available_columns)
+        prompt = self._build_prompt_for_code(query, available_columns, datasets)
         code_str = call_llm(prompt)
 
         if not code_str.strip():
-            return "Не удалось получить код от модели."
+            return "Не удалось получить код от модели.", None
 
         # Убираем возможные ```python``` или ```, затем исполняем код в локальной среде
         code_clean = re.sub(r'```(?:python)?', '', code_str).strip()
@@ -306,26 +305,71 @@ class AnswerGenerationAgent:
             exec(code_clean, {}, local_vars)
         except Exception as e:
             logging.error(f"Ошибка при выполнении сгенерированного кода: {e}")
-            return f"Ошибка при выполнении кода: {e}"
+            return f"Ошибка при выполнении кода: {e}", None
 
         # Проверяем, есть ли result в локальных переменных
         if "result" not in local_vars:
-            return "Модель не сохранила результат в переменной result."
+            return "Модель не сохранила результат в переменной result.", None
 
         result = local_vars["result"]
 
         # Форматируем результат для пользователя
         if isinstance(result, pd.DataFrame):
             # Отображаем первые 10 строк
-            return result.head(10).to_string(index=False)
+            text_result = result.head(10).to_string(index=False)
         elif isinstance(result, pd.Series):
-            return result.head(10).to_string()
+            text_result = result.head(10).to_string()
         else:
-            # Если это число, список, словарь и т.д.
             try:
-                return str(result)
-            except:
-                return "Не удалось отобразить результат."
+                text_result = str(result)
+            except Exception:
+                text_result = "Не удалось отобразить результат."
+
+        return text_result, result
+
+    def summarize(self, query: str, datasets: list, eda_summary: str, result_str: str) -> str:
+        datasets_str = ", ".join(datasets)
+        prompt = (
+            "Ты аналитик, который отвечает на вопросы о муниципальных данных."\
+            " На основе запроса пользователя и вычисленных результатов сформулируй"\
+            " понятный ответ.\n"\
+            f"Запрос: {query}\n"\
+            f"Использованные таблицы: {datasets_str}\n"\
+            f"Краткий анализ данных:\n{eda_summary}\n\n"\
+            f"Результат вычислений:\n{result_str}\n\n"\
+            "Сформулируй развернутый итог, упоминая применённые таблицы и главные"\
+            " выводы."
+        )
+        summary = call_llm(prompt)
+        return summary.strip()
+
+
+
+# === EDAAgent: выполняет краткий анализ данных ===
+class EDAAgent:
+    def __init__(self):
+        self.role = "EDA"
+        logging.info(f"[{self.role}] Инициализирован.")
+
+    def analyze(self, df: pd.DataFrame) -> str:
+        if df.empty:
+            return "Данные отсутствуют или объединение вернуло пустой DataFrame."
+
+        lines = [
+            f"Размер данных: {len(df)} строк, {len(df.columns)} колонок.",
+        ]
+
+        missing = df.isna().sum()
+        missing = missing[missing > 0]
+        if not missing.empty:
+            lines.append("Пропуски (топ 5):")
+            lines.append(missing.sort_values(ascending=False).head(5).to_string())
+
+        desc = df.describe(include='all').transpose()
+        lines.append("Статистика (первые 5 строк):")
+        lines.append(desc.head().to_string())
+
+        return "\n".join(lines)
 
 
 # === ContextAgent без изменений ===
@@ -356,6 +400,7 @@ class OrchestratorAgent:
         self.classifier = ClassifierAgent(data_descriptions)
         self.searcher = KnowledgeSearchAgent(data_files)
         self.generator = AnswerGenerationAgent()
+        self.eda = EDAAgent()
         self.context = ContextAgent()
         logging.info("[Оркестратор] Инициализирован.")
 
@@ -382,20 +427,30 @@ class OrchestratorAgent:
             return "Не удалось определить подходящие данные. Попробуйте переформулировать запрос.", {}, False
 
         # 3. Объединяем все указанные таблицы (и mo_ref для названий) в один DataFrame
-        combined_df = self.searcher.combine_dataframes(tables)
+        available_tables = [t for t in tables if t in self.searcher.data and not self.searcher.data[t].empty]
+        missing_tables = [t for t in tables if t not in self.searcher.data or self.searcher.data[t].empty]
+        combined_df = self.searcher.combine_dataframes(available_tables)
 
-        # 4. Генерируем и выполняем pandas-код у LLM для ответа
-        answer = self.generator.generate_and_execute(combined_df, text)
+        # 4. Проводим базовый EDA
+        eda_summary = self.eda.analyze(combined_df)
 
-        # 5. Обновляем контекст
+        # 5. Генерируем и выполняем pandas-код у LLM для ответа
+        result_text, _ = self.generator.generate_and_execute(combined_df, text, available_tables)
+
+        # 6. Формируем развёрнутый ответ с помощью LLM
+        final_answer = self.generator.summarize(text, available_tables, eda_summary, result_text)
+        if missing_tables:
+            final_answer += "\nОтсутствуют данные для: " + ", ".join(missing_tables)
+
+        # 7. Обновляем контекст
         self.context.update_context(user_id, {
             "last_query": text,
             "classification": classification,
-            "last_answer": answer,
+            "last_answer": final_answer,
             "has_data": not combined_df.empty
         })
 
-        return answer, classification, True
+        return final_answer, classification, True
 
     def _is_continuation(self, new_text: str, prev_text: str) -> bool:
         if not prev_text:
@@ -435,7 +490,13 @@ class TelegramBot:
         await message.answer("Привет! Напишите свой запрос.")
 
     async def _handle_message(self, message: types.Message):
-        answer, _, _ = self.orch.process_message(message.from_user.id, message.text)
+        result = self.orch.process_message(message.from_user.id, message.text)
+        if result is None:
+            logging.error("process_message returned None")
+            await message.answer("Произошла ошибка при обработке запроса")
+            return
+
+        answer, _, _ = result
         sanitized = html.escape(answer)
         await message.answer(f"<pre>{sanitized}</pre>")
 
