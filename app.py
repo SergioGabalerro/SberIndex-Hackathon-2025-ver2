@@ -19,6 +19,8 @@ import html
 # Импорт ChatOpenAI из актуального модуля langchain_openai
 from langchain_openai import ChatOpenAI
 from langchain_gigachat.chat_models import GigaChat
+import openai
+from types import SimpleNamespace
 
 
 # === Загрузка переменных окружения из .env ===
@@ -27,15 +29,37 @@ load_dotenv()  # автоматически найдёт файл .env в кор
 MODEL_TYPE = os.getenv("MODEL_TYPE", "gigachat").lower()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 GIGACHAT_AUTH_KEY = os.getenv("GIGACHAT_AUTH_KEY", "")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "")
 
+
+class DeepSeekLLM:
+    """Минимальная обёртка для API DeepSeek."""
+
+    def __init__(self, api_key: str, model: str = "deepseek-chat", temperature: float = 0.0, timeout: int = 30):
+        self.client = openai.OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
+        self.model = model
+        self.temperature = temperature
+        self.timeout = timeout
+
+    def invoke(self, messages):
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=[{"role": "user", "content": m.content} for m in messages],
+            temperature=self.temperature,
+            timeout=self.timeout,
+        )
+        return SimpleNamespace(content=response.choices[0].message.content)
+
 # Проверки корректности настроек
-if MODEL_TYPE not in ("openai", "gigachat"):
-    raise ValueError(f"Неверный MODEL_TYPE={MODEL_TYPE} в .env — должно быть 'openai' или 'gigachat'.")
+if MODEL_TYPE not in ("openai", "gigachat", "deepseek"):
+    raise ValueError(f"Неверный MODEL_TYPE={MODEL_TYPE} в .env — должно быть 'openai', 'gigachat' или 'deepseek'.")
 if MODEL_TYPE == "openai" and not OPENAI_API_KEY:
     raise ValueError("Вы выбрали MODEL_TYPE=openai, но не указали OPENAI_API_KEY в .env.")
 if MODEL_TYPE == "gigachat" and not GIGACHAT_AUTH_KEY:
     raise ValueError("Вы выбрали MODEL_TYPE=gigachat, но не указали GIGACHAT_AUTH_KEY в .env.")
+if MODEL_TYPE == "deepseek" and not DEEPSEEK_API_KEY:
+    raise ValueError("Вы выбрали MODEL_TYPE=deepseek, но не указали DEEPSEEK_API_KEY в .env.")
 if not TELEGRAM_TOKEN:
     raise ValueError("Не указан TELEGRAM_TOKEN в .env.")
 
@@ -115,6 +139,14 @@ def init_llm():
             model_name="gpt-4o",
             temperature=0.0,
             request_timeout=30
+        )
+    if MODEL_TYPE == "deepseek":
+        logging.info("Инициализация DeepSeek в качестве LLM")
+        return DeepSeekLLM(
+            api_key=DEEPSEEK_API_KEY,
+            model="deepseek-chat",
+            temperature=0.0,
+            timeout=30
         )
     else:
         logging.info("Инициализация GigaChat в качестве LLM")
