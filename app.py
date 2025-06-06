@@ -444,8 +444,9 @@ class OrchestratorAgent:
 
         # 6. Формируем развёрнутый ответ с помощью LLM
         final_answer = self.generator.summarize(text, available_tables, eda_summary, result_text)
-        if code_snippet:
-            final_answer += "\n\nСгенерированный код:\n" + code_snippet
+       #Разкомментировать если вернуть отображение кода
+       # if code_snippet:
+       #     final_answer += "\n\nСгенерированный код:\n" + code_snippet
         if missing_tables:
             final_answer += "\nОтсутствуют данные для: " + ", ".join(missing_tables)
 
@@ -505,9 +506,12 @@ class TelegramBot:
 
         answer, classification, _ = result
         sanitized_answer = html.escape(answer)
-        classification_json = json.dumps(classification, ensure_ascii=False)
-        sanitized_class = html.escape(classification_json)
-        await message.answer(f"<pre>{sanitized_answer}\n\nClassifierAgent: {sanitized_class}</pre>")
+        # Разкомментировать, чтобы вернуть отображение кода
+        #classification_json = json.dumps(classification, ensure_ascii=False)
+        #sanitized_class = html.escape(classification_json)
+        #await message.answer(f"<pre>{sanitized_answer}\n\nClassifierAgent: {sanitized_class}</pre>")
+
+        await message.answer(f"<pre>{sanitized_answer}</pre>") # Это наоборот закомментировать, чтобы вернуть отображение кода
 
     async def run(self):
         await self.dp.start_polling(self.bot, skip_updates=True)
