@@ -50,9 +50,7 @@ logging.basicConfig(
 )
 
 # === Папка с данными и пути к файлам ===
-# Папка data располагается рядом с этим скриптом, поэтому
-# формируем абсолютный путь относительно текущего файла.
-DATA_DIR = Path(__file__).resolve().parent / 'data'
+DATA_DIR = Path('data')
 
 DATA_FILES = {
     "market_access": DATA_DIR / "1_market_access.parquet",
@@ -225,16 +223,6 @@ class KnowledgeSearchAgent:
         self.data = DataLoader.load_data(data_files)
         logging.info(f"[{self.role}] Инициализирован.")
 
-    def get_dataframes(self, datasets: list) -> dict:
-        """Возвращает копии выбранных датафреймов в словаре."""
-        dfs = {}
-        for ds in datasets:
-            if ds in self.data:
-                dfs[ds] = self.data[ds].copy()
-        if "mo_ref" in self.data and "mo_ref" not in dfs:
-            dfs["mo_ref"] = self.data["mo_ref"].copy()
-        return dfs
-
     def combine_dataframes(self, datasets: list) -> pd.DataFrame:
         """
         Принимаем список имён таблиц (например, ["salary", "population"]),
@@ -271,29 +259,37 @@ class AnswerGenerationAgent:
         self.role = "Генератор ответов"
         logging.info(f"[{self.role}] Инициализирован.")
 
-    def _build_prompt_for_code(self, query: str, columns_by_table: dict, datasets: list) -> str:
-        """Формируем prompt, чтобы LLM выдал код на pandas."""
-        dataset_lines = [f"{name}: {', '.join(cols)}" for name, cols in columns_by_table.items()]
-        cols_info = "\n".join(dataset_lines)
+    def _build_prompt_for_code(self, query: str, available_columns: list, datasets: list) -> str:
+        """
+        Строим prompt, чтобы LLM вернул фрагмент Pandas-кода,
+        который обрабатывает переменную df (объединённый DataFrame)
+        и сохраняет результат в переменную 'result'.
+        Также перечисляем доступные колонки для контекста.
+        """
+        cols_list = ", ".join(available_columns)
         datasets_str = ", ".join(datasets)
         return (
-            f"Есть таблицы {datasets_str} в виде отдельных DataFrame в словаре dfs. " \
-            f"Вот их колонки:\n{cols_info}\n" \
-            f"Запрос пользователя: «{query}».\n" \
-            "Не считывай файлы с диска. Используй только dfs. " \
-            "Сначала обработай каждую таблицу отдельно и только затем объединяй их, по полю territory_id " \
-            "если это потребуется. Итог сохрани в переменную result." \
-            " Используй pandas и numpy, добавляй комментарии при необходимости."
-            "Решение об обработке пропусков для каждой таблицы принимай, исходя из контекста запроса пользователя "
-            " Если нужны названия муниципалитетов, используй поле municipal_district_name."
+            "У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: "
+            f"{datasets_str}. Данные объединены по ключу territory_id.\n"
+            f"Доступные колонки: {cols_list}.\n\n"
+            f"Запрос пользователя: «{query}».\n\n"
+            "Нужно написать только Python-код на pandas, numpy, который даст ответ на запрос, "
+            "используя df и сохраняя итог в переменную result. "
+            "Добавляй комментарии при необходимости, но не включай пояснений вне кода. "
+            "Перед приведением значений к целочисленному типу убирай или заменяй пропуски и бесконечные значения, "
+            "чтобы не возникала ошибка 'Cannot convert non-finite values to integer'."
         )
 
-    def generate_and_execute(self, dfs: dict, query: str, datasets: list) -> tuple[str, object, str]:
-        """Генерирует код LLM и выполняет его."""
-        if not dfs:
-            return "Нет доступных данных для анализа.", None, ""
+    def generate_and_execute(self, combined_df: pd.DataFrame, query: str, datasets: list) -> tuple[str, object, str]:
+        """
+        Запрашиваем у LLM код, исполняем его и возвращаем текстовый результат,
+        сам объект результата и сгенерированный код.
+        """
+        if combined_df.empty:
+            return "Данные оказались пустыми после объединения. Нечего обрабатывать.", None, ""
 
-        available_columns = {name: list(df.columns) for name, df in dfs.items()}
+        # Составляем список доступных колонок
+        available_columns = list(combined_df.columns)
         prompt = self._build_prompt_for_code(query, available_columns, datasets)
         code_str = call_llm(prompt)
 
@@ -304,8 +300,8 @@ class AnswerGenerationAgent:
         code_clean = re.sub(r'```(?:python)?', '', code_str).strip()
 
         # Подготовим локальную среду для выполнения
-        safe_dfs = {name: df.replace([np.inf, -np.inf], pd.NA).copy() for name, df in dfs.items()}
-        local_vars = {"dfs": safe_dfs, "pd": pd, "np": np}
+        clean_df = combined_df.replace([np.inf, -np.inf], pd.NA).fillna(0)
+        local_vars = {"df": clean_df.copy(), "pd": pd, "np": np}
         try:
             # Выполняем код. Ожидаем, что в коде в конце появится переменная result.
             exec(code_clean, {}, local_vars)
@@ -343,10 +339,9 @@ class AnswerGenerationAgent:
             f"Использованные таблицы: {datasets_str}\n"\
             f"Краткий анализ данных:\n{eda_summary}\n\n"\
             f"Результат вычислений:\n{result_str}\n\n"\
-            "Сформулируй краткий, но емкий ответ с предложением возможных причин, вот пример:"\
-            "Пример вопроса: в каких МО высокая зарплата не помогает удержать население?"\
-            "Пример ответа: МО Y имеет среднюю зарплату 79,000₽ (TOP-10%), но потерял 2.4% населения. Причина может крыться в низкой рыночной доступности (MA = 150) и изоляци"
-            "Если упоминаешь муниципалитеты, используй полное название из столбца municipal_district_name."
+            "Сформулируй развернутый итог, упоминая применённые таблицы и главные"\
+            " выводы."
+            f" Также предложи какие данные из имеющихся в {DATA_DESCRIPTIONS} могут усилить этот анализ, укажи наиболее подходящиие по смыслу влияния - поясни почему по смысл они подходят, а также предложи какие интрументы анализа использовать"
         )
         summary = call_llm(prompt)
         return summary.strip()
@@ -434,17 +429,16 @@ class OrchestratorAgent:
         if not tables:
             return "Не удалось определить подходящие данные. Попробуйте переформулировать запрос.", {}, False
 
-        # 3. Отбираем нужные таблицы и готовим данные
+        # 3. Объединяем все указанные таблицы (и mo_ref для названий) в один DataFrame
         available_tables = [t for t in tables if t in self.searcher.data and not self.searcher.data[t].empty]
         missing_tables = [t for t in tables if t not in self.searcher.data or self.searcher.data[t].empty]
-        dataframes = self.searcher.get_dataframes(available_tables)
         combined_df = self.searcher.combine_dataframes(available_tables)
 
         # 4. Проводим базовый EDA
         eda_summary = self.eda.analyze(combined_df)
 
         # 5. Генерируем и выполняем pandas-код у LLM для ответа
-        result_text, _, code_snippet = self.generator.generate_and_execute(dataframes, text, available_tables)
+        result_text, _, code_snippet = self.generator.generate_and_execute(combined_df, text, available_tables)
 
         # 6. Формируем развёрнутый ответ с помощью LLM
         final_answer = self.generator.summarize(text, available_tables, eda_summary, result_text)
@@ -458,7 +452,7 @@ class OrchestratorAgent:
             "last_query": text,
             "classification": classification,
             "last_answer": final_answer,
-            "has_data": bool(dataframes)
+            "has_data": not combined_df.empty
         })
 
         return final_answer, classification, True
