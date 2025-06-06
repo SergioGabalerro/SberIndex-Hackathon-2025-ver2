@@ -6,6 +6,7 @@ import numpy as np
 import asyncio
 import re
 from pathlib import Path
+import matplotlib.pyplot as plt
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
@@ -18,6 +19,7 @@ import html
 # Импорт ChatOpenAI из актуального модуля langchain_openai
 from langchain_openai import ChatOpenAI
 from langchain_gigachat.chat_models import GigaChat
+
 
 # === Загрузка переменных окружения из .env ===
 load_dotenv()  # автоматически найдёт файл .env в корне проекта
@@ -122,8 +124,6 @@ def init_llm():
             model="GigaChat:2-Max",
             timeout=30
         )
-
-
 llm = init_llm()
 
 
@@ -204,6 +204,7 @@ class ClassifierAgent:
             f"«{query}»\n\n"
             "Твоя задача — определить, какие таблицы (названия) нужно использовать, "
             "чтобы ответить на этот запрос. "
+            #"Также учитывай какие другие таблицы из имеющихся датасетов большое влияние на таблицы которые ты выбрал для анализа и включи их (к примеру мы выбрали popultion,а на него скорее всего влияет migration)"
             "Верни ответ ровно в формате JSON: {\"datasets\": [\"имя1\", \"имя2\", …]}"
         )
 
@@ -272,19 +273,20 @@ class AnswerGenerationAgent:
             f"{datasets_str}. Данные объединены по ключу territory_id.\n"
             f"Доступные колонки: {cols_list}.\n\n"
             f"Запрос пользователя: «{query}».\n\n"
-            "Нужно написать только Python-код на pandas, который даст ответ на запрос, "
+            "Нужно написать только Python-код на pandas, numpy, который даст ответ на запрос, "
             "используя df и сохраняя итог в переменную result. "
             "Добавляй комментарии при необходимости, но не включай пояснений вне кода. "
             "Перед приведением значений к целочисленному типу убирай или заменяй пропуски и бесконечные значения, "
             "чтобы не возникала ошибка 'Cannot convert non-finite values to integer'."
         )
 
-    def generate_and_execute(self, combined_df: pd.DataFrame, query: str, datasets: list) -> tuple[str, object]:
+    def generate_and_execute(self, combined_df: pd.DataFrame, query: str, datasets: list) -> tuple[str, object, str]:
         """
-        Запрашиваем у LLM код, исполняем его и возвращаем результат в удобном формате.
+        Запрашиваем у LLM код, исполняем его и возвращаем текстовый результат,
+        сам объект результата и сгенерированный код.
         """
         if combined_df.empty:
-            return "Данные оказались пустыми после объединения. Нечего обрабатывать.", None
+            return "Данные оказались пустыми после объединения. Нечего обрабатывать.", None, ""
 
         # Составляем список доступных колонок
         available_columns = list(combined_df.columns)
@@ -292,7 +294,7 @@ class AnswerGenerationAgent:
         code_str = call_llm(prompt)
 
         if not code_str.strip():
-            return "Не удалось получить код от модели.", None
+            return "Не удалось получить код от модели.", None, code_str
 
         # Убираем возможные ```python``` или ```, затем исполняем код в локальной среде
         code_clean = re.sub(r'```(?:python)?', '', code_str).strip()
@@ -305,11 +307,11 @@ class AnswerGenerationAgent:
             exec(code_clean, {}, local_vars)
         except Exception as e:
             logging.error(f"Ошибка при выполнении сгенерированного кода: {e}")
-            return f"Ошибка при выполнении кода: {e}", None
+            return f"Ошибка при выполнении кода: {e}", None, code_str
 
         # Проверяем, есть ли result в локальных переменных
         if "result" not in local_vars:
-            return "Модель не сохранила результат в переменной result.", None
+            return "Модель не сохранила результат в переменной result.", None, code_str
 
         result = local_vars["result"]
 
@@ -325,7 +327,7 @@ class AnswerGenerationAgent:
             except Exception:
                 text_result = "Не удалось отобразить результат."
 
-        return text_result, result
+        return text_result, result, code_str
 
     def summarize(self, query: str, datasets: list, eda_summary: str, result_str: str) -> str:
         datasets_str = ", ".join(datasets)
@@ -339,6 +341,7 @@ class AnswerGenerationAgent:
             f"Результат вычислений:\n{result_str}\n\n"\
             "Сформулируй развернутый итог, упоминая применённые таблицы и главные"\
             " выводы."
+            f" Также предложи какие данные из имеющихся в {DATA_DESCRIPTIONS} могут усилить этот анализ, укажи наиболее подходящиие по смыслу влияния - поясни почему по смысл они подходят, а также предложи какие интрументы анализа использовать"
         )
         summary = call_llm(prompt)
         return summary.strip()
@@ -435,10 +438,12 @@ class OrchestratorAgent:
         eda_summary = self.eda.analyze(combined_df)
 
         # 5. Генерируем и выполняем pandas-код у LLM для ответа
-        result_text, _ = self.generator.generate_and_execute(combined_df, text, available_tables)
+        result_text, _, code_snippet = self.generator.generate_and_execute(combined_df, text, available_tables)
 
         # 6. Формируем развёрнутый ответ с помощью LLM
         final_answer = self.generator.summarize(text, available_tables, eda_summary, result_text)
+        if code_snippet:
+            final_answer += "\n\nСгенерированный код:\n" + code_snippet
         if missing_tables:
             final_answer += "\nОтсутствуют данные для: " + ", ".join(missing_tables)
 
@@ -496,9 +501,11 @@ class TelegramBot:
             await message.answer("Произошла ошибка при обработке запроса")
             return
 
-        answer, _, _ = result
-        sanitized = html.escape(answer)
-        await message.answer(f"<pre>{sanitized}</pre>")
+        answer, classification, _ = result
+        sanitized_answer = html.escape(answer)
+        classification_json = json.dumps(classification, ensure_ascii=False)
+        sanitized_class = html.escape(classification_json)
+        await message.answer(f"<pre>{sanitized_answer}\n\nClassifierAgent: {sanitized_class}</pre>")
 
     async def run(self):
         await self.dp.start_polling(self.bot, skip_updates=True)

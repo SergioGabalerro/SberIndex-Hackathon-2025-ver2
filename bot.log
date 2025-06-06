@@ -777,3 +777,523 @@ df_2024 = df[df['ye...
 [2025-06-06 00:51:51,770] INFO: Update id=526914557 is handled. Duration 15125 ms by bot id=7709142539
 [2025-06-06 00:55:19,991] INFO: Polling stopped
 [2025-06-06 00:55:20,246] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 01:20:44,693] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-06 01:20:45,886] INFO: [Классификатор] Инициализирован.
+[2025-06-06 01:20:45,930] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-06 01:20:46,069] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-06 01:20:46,091] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-06 01:20:46,181] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-06 01:20:46,243] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-06 01:20:46,923] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-06 01:20:46,923] INFO: [Поисковик] Инициализирован.
+[2025-06-06 01:20:46,923] INFO: [Генератор ответов] Инициализирован.
+[2025-06-06 01:20:46,923] INFO: [EDA] Инициализирован.
+[2025-06-06 01:20:46,924] INFO: [Контекст] Инициализирован.
+[2025-06-06 01:20:46,924] INFO: [Оркестратор] Инициализирован.
+[2025-06-06 01:20:46,925] INFO: Start polling
+[2025-06-06 01:20:47,134] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 01:20:51,278] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:20:51,278] WARNING: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7709142539)
+[2025-06-06 01:20:56,642] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:20:56,642] WARNING: Sleep for 1.235694 seconds and try again... (tryings = 1, bot id = 7709142539)
+[2025-06-06 01:21:02,760] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:21:02,761] WARNING: Sleep for 1.740339 seconds and try again... (tryings = 2, bot id = 7709142539)
+[2025-06-06 01:21:05,094] INFO: Connection established (tryings = 3, bot id = 7709142539)
+[2025-06-06 01:21:05,523] INFO: Update id=526914559 is handled. Duration 421 ms by bot id=7709142539
+[2025-06-06 01:21:09,838] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:21:09,838] WARNING: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7709142539)
+[2025-06-06 01:21:11,659] INFO: Connection established (tryings = 1, bot id = 7709142539)
+[2025-06-06 01:21:11,661] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 01:21:13,023] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:21:13,055] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 01:21:13,056] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 01:21:14,000] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:21:14,000] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "mo_ref"]}
+```...
+[2025-06-06 01:21:16,509] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, mo_ref. Дан...
+[2025-06-06 01:21:19,672] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:21:19,675] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['ye...
+[2025-06-06 01:21:22,868] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 01:21:27,321] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:21:27,324] INFO: [LLM] Получен ответ: На основе проведенного анализа данных из таблиц `population` и `mo_ref`, были определены три муницип...
+[2025-06-06 01:21:27,590] INFO: Update id=526914560 is handled. Duration 15921 ms by bot id=7709142539
+[2025-06-06 01:21:32,533] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:21:32,533] WARNING: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7709142539)
+[2025-06-06 01:21:37,672] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:21:37,672] WARNING: Sleep for 1.430263 seconds and try again... (tryings = 1, bot id = 7709142539)
+[2025-06-06 01:21:43,405] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:21:43,405] WARNING: Sleep for 1.918741 seconds and try again... (tryings = 2, bot id = 7709142539)
+[2025-06-06 01:21:49,762] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:21:49,762] WARNING: Sleep for 2.395210 seconds and try again... (tryings = 3, bot id = 7709142539)
+[2025-06-06 01:21:56,969] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:21:56,969] WARNING: Sleep for 3.145809 seconds and try again... (tryings = 4, bot id = 7709142539)
+[2025-06-06 01:22:05,413] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:22:05,413] WARNING: Sleep for 4.245802 seconds and try again... (tryings = 5, bot id = 7709142539)
+[2025-06-06 01:22:15,691] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:22:15,691] WARNING: Sleep for 5.164724 seconds and try again... (tryings = 6, bot id = 7709142539)
+[2025-06-06 01:22:24,717] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:22:24,717] WARNING: Sleep for 4.989953 seconds and try again... (tryings = 7, bot id = 7709142539)
+[2025-06-06 01:22:34,857] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:22:34,858] WARNING: Sleep for 5.044526 seconds and try again... (tryings = 8, bot id = 7709142539)
+[2025-06-06 01:22:45,046] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:22:45,046] WARNING: Sleep for 5.007139 seconds and try again... (tryings = 9, bot id = 7709142539)
+[2025-06-06 01:22:55,184] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:22:55,184] WARNING: Sleep for 4.976979 seconds and try again... (tryings = 10, bot id = 7709142539)
+[2025-06-06 01:23:05,328] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:23:05,328] WARNING: Sleep for 4.954468 seconds and try again... (tryings = 11, bot id = 7709142539)
+[2025-06-06 01:23:15,639] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:23:15,639] WARNING: Sleep for 5.046677 seconds and try again... (tryings = 12, bot id = 7709142539)
+[2025-06-06 01:23:25,801] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:23:25,801] WARNING: Sleep for 4.971590 seconds and try again... (tryings = 13, bot id = 7709142539)
+[2025-06-06 01:23:35,996] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:23:35,996] WARNING: Sleep for 5.237191 seconds and try again... (tryings = 14, bot id = 7709142539)
+[2025-06-06 01:23:46,440] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:23:46,441] WARNING: Sleep for 4.984286 seconds and try again... (tryings = 15, bot id = 7709142539)
+[2025-06-06 01:23:56,651] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:23:56,651] WARNING: Sleep for 5.089925 seconds and try again... (tryings = 16, bot id = 7709142539)
+[2025-06-06 01:24:06,867] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:24:06,867] WARNING: Sleep for 4.970409 seconds and try again... (tryings = 17, bot id = 7709142539)
+[2025-06-06 01:24:17,035] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:24:17,035] WARNING: Sleep for 4.819886 seconds and try again... (tryings = 18, bot id = 7709142539)
+[2025-06-06 01:24:27,070] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:24:27,076] WARNING: Sleep for 4.910959 seconds and try again... (tryings = 19, bot id = 7709142539)
+[2025-06-06 01:24:37,081] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:24:37,081] WARNING: Sleep for 5.095658 seconds and try again... (tryings = 20, bot id = 7709142539)
+[2025-06-06 01:24:47,307] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:24:47,307] WARNING: Sleep for 5.032122 seconds and try again... (tryings = 21, bot id = 7709142539)
+[2025-06-06 01:24:57,559] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:24:57,559] WARNING: Sleep for 4.897326 seconds and try again... (tryings = 22, bot id = 7709142539)
+[2025-06-06 01:25:07,424] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:25:07,424] WARNING: Sleep for 4.856256 seconds and try again... (tryings = 23, bot id = 7709142539)
+[2025-06-06 01:25:17,577] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:25:17,577] WARNING: Sleep for 4.942897 seconds and try again... (tryings = 24, bot id = 7709142539)
+[2025-06-06 01:25:27,702] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:25:27,702] WARNING: Sleep for 4.982504 seconds and try again... (tryings = 25, bot id = 7709142539)
+[2025-06-06 01:25:38,098] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:25:38,098] WARNING: Sleep for 4.963055 seconds and try again... (tryings = 26, bot id = 7709142539)
+[2025-06-06 01:25:47,925] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:25:47,926] WARNING: Sleep for 4.996652 seconds and try again... (tryings = 27, bot id = 7709142539)
+[2025-06-06 01:25:57,088] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:25:57,089] WARNING: Sleep for 4.932505 seconds and try again... (tryings = 28, bot id = 7709142539)
+[2025-06-06 01:26:06,499] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:26:06,499] WARNING: Sleep for 5.215793 seconds and try again... (tryings = 29, bot id = 7709142539)
+[2025-06-06 01:26:16,672] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:26:16,672] WARNING: Sleep for 5.004868 seconds and try again... (tryings = 30, bot id = 7709142539)
+[2025-06-06 01:26:27,216] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:26:27,216] WARNING: Sleep for 4.965427 seconds and try again... (tryings = 31, bot id = 7709142539)
+[2025-06-06 01:26:35,399] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:26:35,399] WARNING: Sleep for 5.209474 seconds and try again... (tryings = 32, bot id = 7709142539)
+[2025-06-06 01:26:44,732] ERROR: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+[2025-06-06 01:26:44,732] WARNING: Sleep for 4.868533 seconds and try again... (tryings = 33, bot id = 7709142539)
+[2025-06-06 01:26:46,097] INFO: Polling stopped
+[2025-06-06 01:26:46,367] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 01:32:40,226] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-06 01:32:41,369] INFO: [Классификатор] Инициализирован.
+[2025-06-06 01:32:41,411] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-06 01:32:41,539] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-06 01:32:41,557] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-06 01:32:41,671] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-06 01:32:41,735] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-06 01:32:42,518] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-06 01:32:42,518] INFO: [Поисковик] Инициализирован.
+[2025-06-06 01:32:42,518] INFO: [Генератор ответов] Инициализирован.
+[2025-06-06 01:32:42,518] INFO: [EDA] Инициализирован.
+[2025-06-06 01:32:42,518] INFO: [Контекст] Инициализирован.
+[2025-06-06 01:32:42,519] INFO: [Оркестратор] Инициализирован.
+[2025-06-06 01:32:42,520] INFO: Start polling
+[2025-06-06 01:32:42,734] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 01:32:57,635] INFO: Update id=526914563 is handled. Duration 453 ms by bot id=7709142539
+[2025-06-06 01:33:03,979] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 01:33:05,016] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:33:05,036] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 01:33:05,036] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 01:33:05,822] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:33:05,838] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "mo_ref"]}
+```...
+[2025-06-06 01:33:07,473] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, mo_ref. Дан...
+[2025-06-06 01:33:11,963] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:33:11,963] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['ye...
+[2025-06-06 01:33:14,439] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 01:33:20,163] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:33:20,166] INFO: [LLM] Получен ответ: На основе запроса о самых малонаселённых муниципальных образованиях (МО) в 2024 году был проведён ан...
+[2025-06-06 01:33:20,516] INFO: Update id=526914564 is handled. Duration 16546 ms by bot id=7709142539
+[2025-06-06 01:34:05,236] INFO: Polling stopped
+[2025-06-06 01:34:05,499] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 01:52:00,508] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-06 01:52:01,803] INFO: [Классификатор] Инициализирован.
+[2025-06-06 01:52:01,842] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-06 01:52:01,947] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-06 01:52:01,967] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-06 01:52:02,038] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-06 01:52:02,090] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-06 01:52:02,883] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-06 01:52:02,884] INFO: [Поисковик] Инициализирован.
+[2025-06-06 01:52:02,884] INFO: [Генератор ответов] Инициализирован.
+[2025-06-06 01:52:02,884] INFO: [EDA] Инициализирован.
+[2025-06-06 01:52:02,884] INFO: [Контекст] Инициализирован.
+[2025-06-06 01:52:02,884] INFO: [Оркестратор] Инициализирован.
+[2025-06-06 01:52:02,885] INFO: Start polling
+[2025-06-06 01:52:03,100] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 01:52:06,588] INFO: Update id=526914565 is handled. Duration 421 ms by bot id=7709142539
+[2025-06-06 01:52:14,382] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 01:52:15,770] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:52:15,780] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 01:52:15,781] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 01:52:16,704] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:52:16,713] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "mo_ref"]}
+```...
+[2025-06-06 01:52:19,147] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, mo_ref. Дан...
+[2025-06-06 01:52:22,743] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:52:22,754] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['ye...
+[2025-06-06 01:52:25,904] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 01:52:29,999] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 01:52:29,999] INFO: [LLM] Получен ответ: На основе проведенного анализа данных из таблиц `population` и `mo_ref`, были определены три муницип...
+[2025-06-06 01:52:30,338] INFO: Update id=526914566 is handled. Duration 15952 ms by bot id=7709142539
+[2025-06-06 01:54:24,735] INFO: Polling stopped
+[2025-06-06 01:54:24,998] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 02:03:46,268] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-06 02:03:47,430] INFO: [Классификатор] Инициализирован.
+[2025-06-06 02:03:47,472] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-06 02:03:47,591] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-06 02:03:47,615] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-06 02:03:47,689] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-06 02:03:47,741] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-06 02:03:48,455] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-06 02:03:48,455] INFO: [Поисковик] Инициализирован.
+[2025-06-06 02:03:48,455] INFO: [Генератор ответов] Инициализирован.
+[2025-06-06 02:03:48,455] INFO: [EDA] Инициализирован.
+[2025-06-06 02:03:48,455] INFO: [Контекст] Инициализирован.
+[2025-06-06 02:03:48,455] INFO: [Оркестратор] Инициализирован.
+[2025-06-06 02:03:48,456] INFO: Start polling
+[2025-06-06 02:03:48,667] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 02:03:49,148] INFO: Update id=526914567 is handled. Duration 421 ms by bot id=7709142539
+[2025-06-06 02:03:53,611] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 02:03:54,901] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:03:54,903] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 02:03:54,903] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 02:03:56,075] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:03:56,075] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "migration", "mo_ref"]}
+```...
+[2025-06-06 02:06:00,265] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, migration, ...
+[2025-06-06 02:06:06,977] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:06:06,989] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Предполагается, что DataFrame df уже загружен
+
+#...
+[2025-06-06 02:09:41,217] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 02:09:49,037] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:09:49,047] INFO: [LLM] Получен ответ: На основе запроса пользователя и проведенного анализа данных, мы попытались определить три самых мал...
+[2025-06-06 02:09:55,562] ERROR: Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+[2025-06-06 02:09:55,562] WARNING: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7709142539)
+[2025-06-06 02:09:55,897] INFO: Update id=526914568 is handled. Duration 362280 ms by bot id=7709142539
+[2025-06-06 02:10:06,651] INFO: Connection established (tryings = 1, bot id = 7709142539)
+[2025-06-06 02:12:02,864] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'Выбери мне три Самых мало на...
+[2025-06-06 02:12:04,223] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:12:04,235] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": false}
+```...
+[2025-06-06 02:12:04,235] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 02:12:04,809] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:12:04,813] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 02:12:04,816] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 02:12:05,908] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:12:05,914] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["salary", "mo_ref"]}
+```...
+[2025-06-06 02:12:07,227] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: salary, mo_ref. Данные ...
+[2025-06-06 02:12:12,154] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:12:12,166] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['ye...
+[2025-06-06 02:12:13,851] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 02:12:20,361] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:12:20,365] INFO: [LLM] Получен ответ: На основе проведенного анализа данных из таблиц "salary" и "mo_ref" были определены три муниципальны...
+[2025-06-06 02:12:20,893] INFO: Update id=526914569 is handled. Duration 18030 ms by bot id=7709142539
+[2025-06-06 02:13:13,938] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'Выбери мне три Самых высоких...
+[2025-06-06 02:13:15,061] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:13:15,063] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": false}
+```...
+[2025-06-06 02:13:15,063] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 02:13:15,511] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:13:15,514] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 02:13:15,515] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 02:13:16,266] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:13:16,270] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "migration", "mo_ref"]}
+```...
+[2025-06-06 02:15:37,583] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, migration, ...
+[2025-06-06 02:15:43,461] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:15:43,493] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Предполагается, что DataFrame df уже загружен
+
+#...
+[2025-06-06 02:19:42,710] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 02:19:53,489] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:19:53,497] INFO: [LLM] Получен ответ: На основе запроса о трех самых малонаселенных муниципальных образованиях (МО) на 2024 год, был прове...
+[2025-06-06 02:19:58,746] INFO: Polling stopped
+[2025-06-06 02:19:58,756] ERROR: Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+[2025-06-06 02:19:58,756] WARNING: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7709142539)
+[2025-06-06 02:19:58,879] INFO: Update id=526914570 is not handled. Duration 404937 ms by bot id=7709142539
+[2025-06-06 02:19:58,879] ERROR: Cause exception while process update id=526914570 by bot id=7709142539
+TelegramNetworkError: HTTP Client says - ClientConnectionError: Connector is closed.
+Traceback (most recent call last):
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\session\aiohttp.py", line 177, in make_request
+    async with session.post(
+               ^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiohttp\client.py", line 1425, in __aenter__
+    self._resp: _RetType = await self._coro
+                           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiohttp\client.py", line 703, in _request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiohttp\connector.py", line 558, in connect
+    raise ClientConnectionError("Connector is closed.")
+aiohttp.client_exceptions.ClientConnectionError: Connector is closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 505, in _handle_message
+    await message.answer(f"<pre>{sanitized_answer}\n\nClassifierAgent: {sanitized_class}</pre>")
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\methods\base.py", line 84, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\bot.py", line 478, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\session\base.py", line 254, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\client\session\aiohttp.py", line 184, in make_request
+    raise TelegramNetworkError(method=method, message=f"{type(e).__name__}: {e}")
+aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientConnectionError: Connector is closed.
+[2025-06-06 02:19:59,018] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 02:24:56,461] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-06 02:24:57,806] INFO: [Классификатор] Инициализирован.
+[2025-06-06 02:24:57,930] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-06 02:24:58,046] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-06 02:24:58,058] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-06 02:24:58,141] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-06 02:24:58,196] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-06 02:24:58,935] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-06 02:24:58,935] INFO: [Поисковик] Инициализирован.
+[2025-06-06 02:24:58,935] INFO: [Генератор ответов] Инициализирован.
+[2025-06-06 02:24:58,935] INFO: [EDA] Инициализирован.
+[2025-06-06 02:24:58,935] INFO: [Контекст] Инициализирован.
+[2025-06-06 02:24:58,935] INFO: [Оркестратор] Инициализирован.
+[2025-06-06 02:24:58,937] INFO: Start polling
+[2025-06-06 02:24:59,193] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 02:24:59,260] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 02:25:00,260] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:25:00,275] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 02:25:00,275] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 02:25:01,795] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:25:01,797] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "mo_ref"]}
+```...
+[2025-06-06 02:25:03,973] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, mo_ref. Дан...
+[2025-06-06 02:25:07,418] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:25:07,418] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['ye...
+[2025-06-06 02:25:10,624] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 02:25:18,865] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:25:18,868] INFO: [LLM] Получен ответ: На основе запроса пользователя и проведенного анализа данных, были определены три муниципальных обра...
+[2025-06-06 02:25:19,088] INFO: Update id=526914571 is handled. Duration 157 ms by bot id=7709142539
+[2025-06-06 02:25:19,417] INFO: Update id=526914570 is handled. Duration 20155 ms by bot id=7709142539
+[2025-06-06 02:25:37,103] INFO: Update id=526914572 is handled. Duration 62 ms by bot id=7709142539
+[2025-06-06 02:25:46,664] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'Выбери мне три Самых мало на...
+[2025-06-06 02:25:48,330] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:25:48,334] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": false}
+```...
+[2025-06-06 02:25:48,334] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 02:25:48,964] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:25:48,970] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 02:25:48,971] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 02:25:49,848] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:25:49,850] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "mo_ref"]}
+```...
+[2025-06-06 02:25:51,434] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, mo_ref. Дан...
+[2025-06-06 02:25:57,306] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:25:57,306] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['ye...
+[2025-06-06 02:25:59,528] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 02:26:10,208] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:26:10,211] INFO: [LLM] Получен ответ: На основе запроса пользователя и проведенного анализа данных, были определены три муниципальных обра...
+[2025-06-06 02:26:10,771] INFO: Update id=526914573 is handled. Duration 24109 ms by bot id=7709142539
+[2025-06-06 02:27:30,504] INFO: Polling stopped
+[2025-06-06 02:27:30,654] ERROR: Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientOSError: [Errno 1] [SSL: APPLICATION_DATA_AFTER_CLOSE_NOTIFY] application data after close notify (_ssl.c:2685)
+[2025-06-06 02:27:30,655] WARNING: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7709142539)
+[2025-06-06 02:27:30,761] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 02:43:22,041] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-06 02:43:23,105] INFO: [Классификатор] Инициализирован.
+[2025-06-06 02:43:23,143] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-06 02:43:23,264] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-06 02:43:23,284] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-06 02:43:23,355] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-06 02:43:23,397] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-06 02:43:23,991] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-06 02:43:23,991] INFO: [Поисковик] Инициализирован.
+[2025-06-06 02:43:23,991] INFO: [Генератор ответов] Инициализирован.
+[2025-06-06 02:43:23,991] INFO: [EDA] Инициализирован.
+[2025-06-06 02:43:23,991] INFO: [Контекст] Инициализирован.
+[2025-06-06 02:43:23,991] INFO: [Оркестратор] Инициализирован.
+[2025-06-06 02:43:23,994] INFO: Start polling
+[2025-06-06 02:43:24,239] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-06 02:43:45,554] INFO: Update id=526914574 is handled. Duration 420 ms by bot id=7709142539
+[2025-06-06 02:43:57,553] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 02:43:58,764] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:43:58,770] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 02:43:58,770] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 02:43:59,894] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:43:59,898] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "mo_ref"]}
+```...
+[2025-06-06 02:44:01,499] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, mo_ref. Дан...
+[2025-06-06 02:44:04,973] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:44:04,977] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['ye...
+[2025-06-06 02:44:07,170] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 02:44:13,922] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:44:13,926] INFO: [LLM] Получен ответ: На основе проведенного анализа данных из таблиц `population` и `mo_ref`, были определены три муницип...
+[2025-06-06 02:44:14,180] INFO: Update id=526914575 is handled. Duration 16625 ms by bot id=7709142539
+[2025-06-06 02:49:39,536] INFO: Update id=526914576 is handled. Duration 77 ms by bot id=7709142539
+[2025-06-06 02:49:49,968] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'Выбери мне три Самых мало на...
+[2025-06-06 02:49:50,907] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:49:50,911] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": false}
+```...
+[2025-06-06 02:49:50,911] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 02:49:51,548] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:49:51,551] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 02:49:51,551] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 02:49:52,733] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:49:52,735] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "mo_ref"]}
+```...
+[2025-06-06 02:49:55,072] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, mo_ref. Дан...
+[2025-06-06 02:49:58,941] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:49:58,941] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['ye...
+[2025-06-06 02:50:02,169] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 02:50:08,918] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:50:08,918] INFO: [LLM] Получен ответ: На основе запроса пользователя и проведенного анализа данных, были определены три муниципальных обра...
+[2025-06-06 02:50:09,497] INFO: Update id=526914577 is handled. Duration 19515 ms by bot id=7709142539
+[2025-06-06 02:51:35,361] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'Выбери мне три Самых мало на...
+[2025-06-06 02:51:37,384] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:51:37,394] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": true}
+```...
+[2025-06-06 02:51:37,394] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-06 02:51:38,073] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:51:38,078] INFO: [LLM] Получен ответ: valid...
+[2025-06-06 02:51:38,078] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-06 02:51:39,322] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:51:39,324] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "mo_ref"]}
+```...
+[2025-06-06 02:51:41,770] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, mo_ref. Дан...
+[2025-06-06 02:51:47,077] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:51:47,079] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Фильтруем данные...
+[2025-06-06 02:51:49,989] ERROR: Ошибка при выполнении сгенерированного кода: No module named 'matplotlib'
+[2025-06-06 02:51:50,055] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-06 02:51:57,899] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-06 02:51:57,901] INFO: [LLM] Получен ответ: В ходе анализа запроса на построение графика и выявление трёх самых малонаселённых муниципальных обр...
+[2025-06-06 02:51:58,179] INFO: Update id=526914578 is handled. Duration 22811 ms by bot id=7709142539
+[2025-06-06 02:56:03,708] INFO: Polling stopped
+[2025-06-06 02:56:03,969] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
