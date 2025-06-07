@@ -329,12 +329,14 @@ class AnswerGenerationAgent:
         available_columns = list(combined_df.columns)
         prompt = self._build_prompt_for_code(query, available_columns, datasets)
         code_str = call_llm(prompt)
+        logging.info("[GeneratedCode]\n%s", code_str)
 
         if not code_str.strip():
             return "Не удалось получить код от модели.", None, code_str
 
         # Убираем возможные ```python``` или ```, затем исполняем код в локальной среде
         code_clean = re.sub(r'```(?:python)?', '', code_str).strip()
+        logging.info("[ExecutingCode]\n%s", code_clean)
 
         # Подготовим локальную среду для выполнения
         clean_df = combined_df.replace([np.inf, -np.inf], pd.NA).fillna(0)
@@ -447,6 +449,7 @@ class OrchestratorAgent:
         logging.info("[Оркестратор] Инициализирован.")
 
     def process_message(self, user_id: int, text: str) -> tuple[str, dict, bool]:
+        logging.info("[User %s] Запрос: %s", user_id, text)
         ctx = self.context.get_context(user_id)
 
         # Если это не уточнение предыдущего, сбрасываем контекст
@@ -467,6 +470,7 @@ class OrchestratorAgent:
         tables = classification.get("datasets", [])
         if not tables:
             return "Не удалось определить подходящие данные. Попробуйте переформулировать запрос.", {}, False
+
 
         # 3. Объединяем все указанные таблицы (и mo_ref для названий) в один DataFrame
         available_tables = [t for t in tables if t in self.searcher.data and not self.searcher.data[t].empty]
@@ -529,10 +533,20 @@ class TelegramBot:
 
     def _setup_handlers(self):
         self.dp.message(Command("start"))(self._cmd_start)
+        self.dp.message(Command("logs"))(self._cmd_logs)
         self.dp.message()(self._handle_message)
 
     async def _cmd_start(self, message: types.Message):
         await message.answer("Привет! Напишите свой запрос.")
+
+    async def _cmd_logs(self, message: types.Message):
+        try:
+            with open("bot.log", "r") as f:
+                logs = f.read()[-4000:]
+            await message.answer(f"<pre>{html.escape(logs)}</pre>")
+        except Exception as e:
+            logging.error("Не удалось отправить лог: %s", e)
+            await message.answer("Не удалось прочитать лог-файл.")
 
     async def _handle_message(self, message: types.Message):
         result = self.orch.process_message(message.from_user.id, message.text)
