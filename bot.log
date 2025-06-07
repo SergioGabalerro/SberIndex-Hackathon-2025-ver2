@@ -3716,3 +3716,72 @@ result = top_3_mo
 [2025-06-07 12:38:25,919] INFO: Update id=526914684 is handled. Duration 22281 ms by bot id=7709142539
 [2025-06-07 12:42:37,300] INFO: Polling stopped
 [2025-06-07 12:42:37,555] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 13:16:40,126] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-07 13:16:41,234] INFO: [Классификатор] Инициализирован.
+[2025-06-07 13:16:41,273] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-07 13:16:41,389] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-07 13:16:41,411] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-07 13:16:41,485] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-07 13:16:41,540] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-07 13:16:42,170] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-07 13:16:42,170] INFO: [Поисковик] Инициализирован.
+[2025-06-07 13:16:42,170] INFO: [Генератор ответов] Инициализирован.
+[2025-06-07 13:16:42,170] INFO: [EDA] Инициализирован.
+[2025-06-07 13:16:42,170] INFO: [Контекст] Инициализирован.
+[2025-06-07 13:16:42,170] INFO: [Оркестратор] Инициализирован.
+[2025-06-07 13:16:42,172] INFO: Start polling
+[2025-06-07 13:16:42,731] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 13:17:15,438] INFO: Update id=526914685 is handled. Duration 561 ms by bot id=7709142539
+[2025-06-07 13:17:35,863] INFO: [User 5694008986] Запрос: в каком 5 МО самая высокая заработная плата в 2024 году
+[2025-06-07 13:17:35,865] INFO: Update id=526914686 is not handled. Duration 15 ms by bot id=7709142539
+[2025-06-07 13:17:35,865] ERROR: Cause exception while process update id=526914686 by bot id=7709142539
+TypeError: validate_query() got an unexpected keyword argument 'history'
+Traceback (most recent call last):
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 580, in _handle_message
+    result = self.orch.process_message(message.from_user.id, message.text)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 487, in process_message
+    if not validate_query(text, history=history):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: validate_query() got an unexpected keyword argument 'history'
+[2025-06-07 13:18:36,034] INFO: Polling stopped
+[2025-06-07 13:18:36,281] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'

@@ -19,6 +19,7 @@ from aiogram.client.bot import DefaultBotProperties
 
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
+from langchain.memory import ConversationBufferMemory
 import html
 
 # Импорт ChatOpenAI из актуального модуля langchain_openai
@@ -164,14 +165,17 @@ def init_llm():
 llm = init_llm()
 
 
-def call_llm(prompt: str) -> str:
+def call_llm(prompt: str, history: list | None = None) -> str:
     """
     Отправляем prompt в LLM и возвращаем «сырой» текстовый ответ.
     Используем метод invoke вместо устаревшего run.
     """
     logging.info(f"[LLM] Отправка запроса: {prompt[:100]}...")
     try:
-        messages = [HumanMessage(content=prompt)]
+        messages = []
+        if history:
+            messages.extend(history)
+        messages.append(HumanMessage(content=prompt))
         response = llm.invoke(messages)
         raw = response.content
         logging.info(f"[LLM] Получен ответ: {raw[:100]}...")
@@ -179,7 +183,6 @@ def call_llm(prompt: str) -> str:
     except Exception as e:
         logging.error(f"Ошибка при обращении к LLM: {str(e)}")
         return ""
-
 
 def parse_json_response(response_str: str) -> dict:
     """
@@ -317,7 +320,8 @@ class AnswerGenerationAgent:
             "чтобы не возникала ошибка 'Cannot convert non-finite values to integer'."
         )
 
-    def generate_and_execute(self, combined_df: pd.DataFrame, query: str, datasets: list) -> tuple[str, object, str]:
+
+    def generate_and_execute(self, combined_df: pd.DataFrame, query: str, datasets: list, history=None) -> tuple[str, object, str]:
         """
         Запрашиваем у LLM код, исполняем его и возвращаем текстовый результат,
         сам объект результата и сгенерированный код.
@@ -328,7 +332,7 @@ class AnswerGenerationAgent:
         # Составляем список доступных колонок
         available_columns = list(combined_df.columns)
         prompt = self._build_prompt_for_code(query, available_columns, datasets)
-        code_str = call_llm(prompt)
+        code_str = call_llm(prompt, history=history)
         logging.info("[GeneratedCode]\n%s", code_str)
 
         if not code_str.strip():
@@ -368,7 +372,7 @@ class AnswerGenerationAgent:
 
         return text_result, result, code_str
 
-    def summarize(self, query: str, datasets: list, eda_summary: str, result_str: str) -> str:
+    def summarize(self, query: str, datasets: list, eda_summary: str, result_str: str, history=None) -> str:
         datasets_str = ", ".join(datasets)
         prompt = (
             "Ты аналитик, который отвечает на вопросы о муниципальных данных." \
@@ -384,7 +388,7 @@ class AnswerGenerationAgent:
             "Причина может крыться в низкой рыночной доступности (MA = 150) и изоляции "
 
         )
-        summary = call_llm(prompt)
+        summary = call_llm(prompt, history=history)
         return summary.strip()
 
 
@@ -420,7 +424,22 @@ class EDAAgent:
 class ContextAgent:
     def __init__(self):
         self.user_context = {}
+        self.user_memory = {}
         logging.info("[Контекст] Инициализирован.")
+
+    def _get_memory(self, user_id: int) -> ConversationBufferMemory:
+        if user_id not in self.user_memory:
+            self.user_memory[user_id] = ConversationBufferMemory(return_messages=True)
+        return self.user_memory[user_id]
+
+    def add_user_message(self, user_id: int, text: str):
+        self._get_memory(user_id).chat_memory.add_user_message(text)
+
+    def add_ai_message(self, user_id: int, text: str):
+        self._get_memory(user_id).chat_memory.add_ai_message(text)
+
+    def get_history(self, user_id: int):
+        return self._get_memory(user_id).chat_memory.messages
 
     def update_context(self, user_id: int, data: dict):
         self.user_context[user_id] = {
@@ -434,6 +453,8 @@ class ContextAgent:
     def clear_context(self, user_id: int):
         if user_id in self.user_context:
             del self.user_context[user_id]
+        if user_id in self.user_memory:
+            self.user_memory[user_id].clear()
 
 
 # === OrchestratorAgent: объединяем все шаги вместе ===
@@ -451,14 +472,19 @@ class OrchestratorAgent:
     def process_message(self, user_id: int, text: str) -> tuple[str, dict, bool]:
         logging.info("[User %s] Запрос: %s", user_id, text)
         ctx = self.context.get_context(user_id)
+        history = self.context.get_history(user_id)
 
         # Если это не уточнение предыдущего, сбрасываем контекст
-        if not self._is_continuation(text, ctx.get("last_query", "")):
+        if not self._is_continuation(text, ctx.get("last_query", ""), history=history):
             self.context.clear_context(user_id)
+            history = self.context.get_history(user_id)
             ctx = {}
 
+        # Сохраняем сообщение пользователя в историю
+        self.context.add_user_message(user_id, text)
+
         # 1. Проверяем, имеет ли смысл двигаться дальше
-        if not validate_query(text):
+        if not validate_query(text, history=history):
             self.context.update_context(user_id, {
                 "last_query": text,
                 "is_ambiguous": True
@@ -466,7 +492,7 @@ class OrchestratorAgent:
             return "Пожалуйста, уточните ваш запрос. Например: 'Где самые высокие зарплаты в IT?'", {}, False
 
         # 2. Классифицируем: получаем список имён таблиц
-        classification = self.classifier.classify(text)
+        classification = self.classifier.classify(text, history=history)
         tables = classification.get("datasets", [])
         if not tables:
             return "Не удалось определить подходящие данные. Попробуйте переформулировать запрос.", {}, False
@@ -481,10 +507,10 @@ class OrchestratorAgent:
         eda_summary = self.eda.analyze(combined_df)
 
         # 5. Генерируем и выполняем pandas-код у LLM для ответа
-        result_text, _, code_snippet = self.generator.generate_and_execute(combined_df, text, available_tables)
+        result_text, _, code_snippet = self.generator.generate_and_execute(combined_df, text, available_tables, history=history)
 
         # 6. Формируем развёрнутый ответ с помощью LLM
-        final_answer = self.generator.summarize(text, available_tables, eda_summary, result_text)
+        final_answer = self.generator.summarize(text, available_tables, eda_summary, result_text, history=history)
        #Разкомментировать если вернуть отображение кода
        # if code_snippet:
        #     final_answer += "\n\nСгенерированный код:\n" + code_snippet
@@ -492,6 +518,7 @@ class OrchestratorAgent:
             final_answer += "\nОтсутствуют данные для: " + ", ".join(missing_tables)
 
         # 7. Обновляем контекст
+        self.context.add_ai_message(user_id, final_answer)
         self.context.update_context(user_id, {
             "last_query": text,
             "classification": classification,
@@ -501,7 +528,7 @@ class OrchestratorAgent:
 
         return final_answer, classification, True
 
-    def _is_continuation(self, new_text: str, prev_text: str) -> bool:
+    def _is_continuation(self, new_text: str, prev_text: str, history=None) -> bool:
         if not prev_text:
             return False
 
@@ -511,7 +538,7 @@ class OrchestratorAgent:
             f"Новый: '{new_text}'\n"
             "Ответ в формате JSON: {\"is_continuation\": true/false}"
         )
-        response = parse_json_response(call_llm(prompt))
+        response = parse_json_response(call_llm(prompt, history=history))
         return response.get("is_continuation", False)
 
 
@@ -537,6 +564,7 @@ class TelegramBot:
         self.dp.message()(self._handle_message)
 
     async def _cmd_start(self, message: types.Message):
+        self.orch.context.clear_context(message.from_user.id)
         await message.answer("Привет! Напишите свой запрос.")
 
     async def _cmd_logs(self, message: types.Message):
