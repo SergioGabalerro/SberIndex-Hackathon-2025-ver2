@@ -297,7 +297,7 @@ class AnswerGenerationAgent:
         self.role = "Генератор ответов"
         logging.info(f"[{self.role}] Инициализирован.")
 
-    def _build_prompt_for_code(self, query: str, available_columns: list, datasets: list) -> str:
+    def _build_prompt_for_code(self, query: str, available_columns: list, datasets: list, prev_answer: str | None = None) -> str:
         """
         Строим prompt, чтобы LLM вернул фрагмент Pandas-кода,
         который обрабатывает переменную df (объединённый DataFrame)
@@ -306,7 +306,14 @@ class AnswerGenerationAgent:
         """
         cols_list = ", ".join(available_columns)
         datasets_str = ", ".join(datasets)
+        context_note = ""
+        if prev_answer:
+            context_note = (
+                f"Предыдущий ответ аналитика:\n{prev_answer}\n"
+                "Если текущий запрос относится к этому ответу, учитывай приведённые выше результаты.\n\n"
+            )
         return (
+            context_note +
             "У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: "
             f"{datasets_str}. Данные объединены по ключу territory_id.\n"
             f"Доступные колонки: {cols_list}.\n\n"
@@ -319,7 +326,7 @@ class AnswerGenerationAgent:
         )
 
 
-    def generate_and_execute(self, combined_df: pd.DataFrame, query: str, datasets: list, history=None) -> tuple[str, object, str]:
+    def generate_and_execute(self, combined_df: pd.DataFrame, query: str, datasets: list, prev_answer: str | None = None, history=None) -> tuple[str, object, str]:
         """
         Запрашиваем у LLM код, исполняем его и возвращаем текстовый результат,
         сам объект результата и сгенерированный код.
@@ -329,7 +336,7 @@ class AnswerGenerationAgent:
 
         # Составляем список доступных колонок
         available_columns = list(combined_df.columns)
-        prompt = self._build_prompt_for_code(query, available_columns, datasets)
+        prompt = self._build_prompt_for_code(query, available_columns, datasets, prev_answer)
         code_str = call_llm(prompt, history=history)
         logging.info("[GeneratedCode]\n%s", code_str)
 
@@ -370,9 +377,16 @@ class AnswerGenerationAgent:
 
         return text_result, result, code_str
 
-    def summarize(self, query: str, datasets: list, eda_summary: str, result_str: str, history=None) -> str:
+    def summarize(self, query: str, datasets: list, eda_summary: str, result_str: str, prev_answer: str | None = None, history=None) -> str:
         datasets_str = ", ".join(datasets)
+        context_note = ""
+        if prev_answer:
+            context_note = (
+                f"Предыдущий ответ аналитика:\n{prev_answer}\n"
+                "Если текущий запрос связан с предыдущим, учитывай эту информацию при формулировке итога.\n\n"
+            )
         prompt = (
+            context_note +
             "Ты аналитик, который отвечает на вопросы о муниципальных данных." \
             " На основе запроса пользователя и вычисленных результатов сформулируй" \
             " понятный ответ.\n" \
@@ -505,13 +519,27 @@ class OrchestratorAgent:
         eda_summary = self.eda.analyze(combined_df)
 
         # 5. Генерируем и выполняем pandas-код у LLM для ответа
-        result_text, _, code_snippet = self.generator.generate_and_execute(combined_df, text, available_tables, history=history)
+        prev_answer = ctx.get("last_answer")
+        result_text, result_obj, code_snippet = self.generator.generate_and_execute(
+            combined_df,
+            text,
+            available_tables,
+            prev_answer=prev_answer,
+            history=history,
+        )
 
         # 6. Формируем развёрнутый ответ с помощью LLM
-        final_answer = self.generator.summarize(text, available_tables, eda_summary, result_text, history=history)
-       #Разкомментировать если вернуть отображение кода
-       # if code_snippet:
-       #     final_answer += "\n\nСгенерированный код:\n" + code_snippet
+        final_answer = self.generator.summarize(
+            text,
+            available_tables,
+            eda_summary,
+            result_text,
+            prev_answer=prev_answer,
+            history=history,
+        )
+        # Разкомментировать если вернуть отображение кода
+        # if code_snippet:
+        #     final_answer += "\n\nСгенерированный код:\n" + code_snippet
         if missing_tables:
             final_answer += "\nОтсутствуют данные для: " + ", ".join(missing_tables)
 
@@ -521,7 +549,8 @@ class OrchestratorAgent:
             "last_query": text,
             "classification": classification,
             "last_answer": final_answer,
-            "has_data": not combined_df.empty
+            "last_result": result_obj,
+            "has_data": not combined_df.empty,
         })
 
         return final_answer, classification, True
