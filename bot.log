@@ -3102,3 +3102,361 @@ import matplotlib.pyplot as plt
 [2025-06-07 02:11:46,276] INFO: Update id=526914643 is handled. Duration 26155 ms by bot id=7709142539
 [2025-06-07 02:11:53,915] INFO: Polling stopped
 [2025-06-07 02:11:54,184] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 10:44:51,183] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-07 10:44:52,150] INFO: [Классификатор] Инициализирован.
+[2025-06-07 10:44:52,185] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-07 10:44:52,290] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-07 10:44:52,310] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-07 10:44:52,380] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-07 10:44:52,431] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-07 10:44:53,004] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-07 10:44:53,004] INFO: [Поисковик] Инициализирован.
+[2025-06-07 10:44:53,004] INFO: [Генератор ответов] Инициализирован.
+[2025-06-07 10:44:53,004] INFO: [EDA] Инициализирован.
+[2025-06-07 10:44:53,004] INFO: [Контекст] Инициализирован.
+[2025-06-07 10:44:53,004] INFO: [Оркестратор] Инициализирован.
+[2025-06-07 10:44:53,005] INFO: Start polling
+[2025-06-07 10:44:53,499] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 10:45:05,406] INFO: Update id=526914654 is handled. Duration 547 ms by bot id=7709142539
+[2025-06-07 10:45:13,491] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-07 10:45:15,132] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 10:45:15,160] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "migration", "salary", "mo_ref"]}
+```...
+[2025-06-07 10:45:20,667] INFO: Update id=526914655 is not handled. Duration 7172 ms by bot id=7709142539
+[2025-06-07 10:45:20,669] ERROR: Cause exception while process update id=526914655 by bot id=7709142539
+MemoryError: Unable to allocate 31.2 GiB for an array with shape (4192871148,) and data type int64
+Traceback (most recent call last):
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 539, in _handle_message
+    result = self.orch.process_message(message.from_user.id, message.text)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 475, in process_message
+    combined_df = self.searcher.combine_dataframes(available_tables)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 286, in combine_dataframes
+    combined = combined.merge(df, on="territory_id", how="inner")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\frame.py", line 10832, in merge
+    return merge(
+           ^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 184, in merge
+    return op.get_result(copy=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 886, in get_result
+    join_index, left_indexer, right_indexer = self._get_join_info()
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 1151, in _get_join_info
+    (left_indexer, right_indexer) = self._get_join_indexers()
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 1125, in _get_join_indexers
+    return get_join_indexers(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 1759, in get_join_indexers
+    lidx, ridx = get_join_indexers_non_unique(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 1799, in get_join_indexers_non_unique
+    lidx, ridx = libjoin.inner_join(lkey, rkey, count, sort=sort)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "join.pyx", line 47, in pandas._libs.join.inner_join
+numpy._core._exceptions._ArrayMemoryError: Unable to allocate 31.2 GiB for an array with shape (4192871148,) and data type int64
+[2025-06-07 10:45:44,138] INFO: Polling stopped
+[2025-06-07 10:45:44,401] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 10:47:06,271] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-07 10:47:07,240] INFO: [Классификатор] Инициализирован.
+[2025-06-07 10:47:07,276] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-07 10:47:07,388] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-07 10:47:07,411] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-07 10:47:07,477] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-07 10:47:07,527] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-07 10:47:08,112] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-07 10:47:08,112] INFO: [Поисковик] Инициализирован.
+[2025-06-07 10:47:08,112] INFO: [Генератор ответов] Инициализирован.
+[2025-06-07 10:47:08,112] INFO: [EDA] Инициализирован.
+[2025-06-07 10:47:08,112] INFO: [Контекст] Инициализирован.
+[2025-06-07 10:47:08,112] INFO: [Оркестратор] Инициализирован.
+[2025-06-07 10:47:08,114] INFO: Start polling
+[2025-06-07 10:47:08,944] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 10:47:14,554] INFO: Update id=526914656 is handled. Duration 592 ms by bot id=7709142539
+[2025-06-07 10:47:25,648] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-07 10:47:26,908] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 10:47:26,923] INFO: [LLM] Получен ответ: valid...
+[2025-06-07 10:47:26,924] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-07 10:47:27,824] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 10:47:27,827] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "mo_ref"]}
+```...
+[2025-06-07 10:47:30,842] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: population, mo_ref. Дан...
+[2025-06-07 10:47:34,907] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 10:47:34,912] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Фильтруем данные...
+[2025-06-07 10:47:41,255] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-07 10:47:47,645] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 10:47:47,647] INFO: [LLM] Получен ответ: На основе анализа данных о населении муниципальных образований (МО) за 2024 год, были выделены 7 наи...
+[2025-06-07 10:47:48,014] INFO: Update id=526914657 is handled. Duration 22360 ms by bot id=7709142539
+[2025-06-07 10:48:13,522] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'Сгенерируй гистограмму по 7 ...
+[2025-06-07 10:48:14,672] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 10:48:14,673] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": false}
+```...
+[2025-06-07 10:48:14,673] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-07 10:48:15,515] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 10:48:15,531] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["population", "migration", "salary", "mo_ref"]}
+```...
+[2025-06-07 10:48:20,220] INFO: Update id=526914658 is not handled. Duration 6688 ms by bot id=7709142539
+[2025-06-07 10:48:20,220] ERROR: Cause exception while process update id=526914658 by bot id=7709142539
+MemoryError: Unable to allocate 31.2 GiB for an array with shape (4192871148,) and data type int64
+Traceback (most recent call last):
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 539, in _handle_message
+    result = self.orch.process_message(message.from_user.id, message.text)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 475, in process_message
+    combined_df = self.searcher.combine_dataframes(available_tables)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 286, in combine_dataframes
+    combined = combined.merge(df, on="territory_id", how="inner")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\frame.py", line 10832, in merge
+    return merge(
+           ^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 184, in merge
+    return op.get_result(copy=copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 886, in get_result
+    join_index, left_indexer, right_indexer = self._get_join_info()
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 1151, in _get_join_info
+    (left_indexer, right_indexer) = self._get_join_indexers()
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 1125, in _get_join_indexers
+    return get_join_indexers(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 1759, in get_join_indexers
+    lidx, ridx = get_join_indexers_non_unique(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\pandas\core\reshape\merge.py", line 1799, in get_join_indexers_non_unique
+    lidx, ridx = libjoin.inner_join(lkey, rkey, count, sort=sort)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "join.pyx", line 47, in pandas._libs.join.inner_join
+numpy._core._exceptions._ArrayMemoryError: Unable to allocate 31.2 GiB for an array with shape (4192871148,) and data type int64
+[2025-06-07 10:49:03,305] INFO: Polling stopped
+[2025-06-07 10:49:03,562] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 11:05:44,079] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-07 11:05:45,562] INFO: [Классификатор] Инициализирован.
+[2025-06-07 11:05:45,669] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-07 11:05:45,830] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-07 11:05:45,858] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-07 11:05:45,965] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-07 11:05:46,031] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-07 11:05:46,826] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-07 11:05:46,826] INFO: [Поисковик] Инициализирован.
+[2025-06-07 11:05:46,826] INFO: [Генератор ответов] Инициализирован.
+[2025-06-07 11:05:46,827] INFO: [EDA] Инициализирован.
+[2025-06-07 11:05:46,827] INFO: [Контекст] Инициализирован.
+[2025-06-07 11:05:46,827] INFO: [Оркестратор] Инициализирован.
+[2025-06-07 11:05:46,829] INFO: Start polling
+[2025-06-07 11:05:47,254] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 11:05:47,374] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-07 11:05:48,768] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:05:48,793] INFO: [LLM] Получен ответ: valid...
+[2025-06-07 11:05:48,793] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-07 11:05:49,598] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:05:49,603] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["salary", "migration", "mo_ref"]}
+```...
+[2025-06-07 11:06:34,158] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: salary, migration, mo_r...
+[2025-06-07 11:06:38,524] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:06:38,533] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Убедимся, что значения в колонках 'value_x' и 'v...
+[2025-06-07 11:07:50,165] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-07 11:07:56,204] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:07:56,228] INFO: [LLM] Получен ответ: На основе анализа данных, были выявлены 5 муниципальных образований (МО) с самыми низкими зарплатами...
+[2025-06-07 11:07:58,767] ERROR: Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+[2025-06-07 11:07:58,769] WARNING: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7709142539)
+[2025-06-07 11:07:59,451] INFO: Update id=526914670 is handled. Duration 132077 ms by bot id=7709142539
+[2025-06-07 11:08:09,894] INFO: Connection established (tryings = 1, bot id = 7709142539)
+[2025-06-07 11:09:23,664] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'найди мне 5 мо с низкой зп и...
+[2025-06-07 11:09:24,685] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:09:24,690] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": false}
+```...
+[2025-06-07 11:09:24,691] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-07 11:09:25,531] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:09:25,536] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["salary", "migration", "mo_ref"]}
+```...
+[2025-06-07 11:10:08,063] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: salary, migration, mo_r...
+[2025-06-07 11:10:13,029] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:10:13,034] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Убираем или заменяем пропуски и бесконечные знач...
+[2025-06-07 11:11:19,348] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-07 11:11:25,781] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:11:25,806] INFO: [LLM] Получен ответ: На основе проведенного анализа данных, к сожалению, не удалось выявить регионы с высокой зарплатой и...
+[2025-06-07 11:11:28,220] ERROR: Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+[2025-06-07 11:11:28,220] WARNING: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7709142539)
+[2025-06-07 11:11:28,781] INFO: Update id=526914671 is handled. Duration 125125 ms by bot id=7709142539
+[2025-06-07 11:11:39,335] INFO: Connection established (tryings = 1, bot id = 7709142539)
+[2025-06-07 11:11:47,710] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'Назови регионы с самой высок...
+[2025-06-07 11:11:48,766] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:11:48,770] INFO: [LLM] Получен ответ: {"is_continuation": true}...
+[2025-06-07 11:11:48,770] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-07 11:11:49,782] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:11:49,785] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["migration", "mo_ref"]}
+```...
+[2025-06-07 11:11:50,117] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: migration, mo_ref. Данн...
+[2025-06-07 11:11:53,345] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:11:53,348] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Предполагается, что DataFrame df уже загружен и ...
+[2025-06-07 11:11:53,697] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-07 11:11:59,181] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:11:59,185] INFO: [LLM] Получен ответ: На основе анализа данных о миграции, топ-3 региона с самым высоким уровнем миграции в 2023 году след...
+[2025-06-07 11:11:59,943] INFO: Update id=526914672 is handled. Duration 12250 ms by bot id=7709142539
+[2025-06-07 11:12:27,531] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'топ 3 региона с высоким уров...
+[2025-06-07 11:12:28,432] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:12:28,440] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": true}
+```...
+[2025-06-07 11:12:28,441] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-07 11:12:29,933] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:12:29,936] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["salary", "mo_ref"]}
+```...
+[2025-06-07 11:12:30,777] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: salary, mo_ref. Данные ...
+[2025-06-07 11:12:33,584] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:12:33,588] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Предполагается, что DataFrame df уже загружен и ...
+[2025-06-07 11:12:34,704] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-07 11:12:42,851] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:12:42,855] INFO: [LLM] Получен ответ: На основе анализа данных о зарплатах в различных регионах, можно выделить следующие наблюдения:
+
+1. ...
+[2025-06-07 11:12:43,298] INFO: Update id=526914673 is handled. Duration 15765 ms by bot id=7709142539
+[2025-06-07 11:13:16,186] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'и какая топ зарплата в этих ...
+[2025-06-07 11:13:17,462] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:13:17,466] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": false}
+```...
+[2025-06-07 11:13:17,468] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-07 11:13:18,480] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:13:18,483] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["migration", "salary", "mo_ref"]}
+```...
+[2025-06-07 11:14:02,932] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: migration, salary, mo_r...
+[2025-06-07 11:14:07,248] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:14:07,253] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Предполагается, что df уже загружен и содержит н...
+[2025-06-07 11:15:14,526] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-07 11:15:19,905] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 11:15:19,913] INFO: [LLM] Получен ответ: На основе анализа данных, топ-3 региона с самым высоким уровнем миграции в 2023 году — это Московска...
+[2025-06-07 11:15:22,894] ERROR: Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+[2025-06-07 11:15:22,895] WARNING: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7709142539)
+[2025-06-07 11:15:23,561] INFO: Update id=526914674 is handled. Duration 127375 ms by bot id=7709142539
+[2025-06-07 11:15:34,086] INFO: Connection established (tryings = 1, bot id = 7709142539)
+[2025-06-07 11:38:06,519] ERROR: Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+[2025-06-07 11:38:06,519] WARNING: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7709142539)
+[2025-06-07 11:38:17,924] INFO: Connection established (tryings = 1, bot id = 7709142539)
+[2025-06-07 11:39:40,123] INFO: Polling stopped
+[2025-06-07 11:39:40,389] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
