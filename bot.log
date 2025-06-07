@@ -3785,3 +3785,180 @@ Traceback (most recent call last):
 TypeError: validate_query() got an unexpected keyword argument 'history'
 [2025-06-07 13:18:36,034] INFO: Polling stopped
 [2025-06-07 13:18:36,281] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 13:35:34,890] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-07 13:35:35,958] INFO: [Классификатор] Инициализирован.
+[2025-06-07 13:35:35,997] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-07 13:35:36,120] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-07 13:35:36,140] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-07 13:35:36,216] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-07 13:35:36,281] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-07 13:35:36,927] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-07 13:35:36,928] INFO: [Поисковик] Инициализирован.
+[2025-06-07 13:35:36,928] INFO: [Генератор ответов] Инициализирован.
+[2025-06-07 13:35:36,928] INFO: [EDA] Инициализирован.
+[2025-06-07 13:35:36,928] INFO: [Контекст] Инициализирован.
+[2025-06-07 13:35:36,928] INFO: [Оркестратор] Инициализирован.
+[2025-06-07 13:35:36,929] INFO: Start polling
+[2025-06-07 13:35:37,276] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 13:35:58,202] INFO: Update id=526914687 is handled. Duration 780 ms by bot id=7709142539
+[2025-06-07 13:36:04,514] INFO: [User 5694008986] Запрос: в каком 5 МО самая высокая заработная плата в 2024 году
+[2025-06-07 13:36:04,516] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-07 13:36:05,780] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 13:36:05,807] INFO: [LLM] Получен ответ: valid...
+[2025-06-07 13:36:05,807] INFO: Update id=526914688 is not handled. Duration 1296 ms by bot id=7709142539
+[2025-06-07 13:36:05,807] ERROR: Cause exception while process update id=526914688 by bot id=7709142539
+TypeError: ClassifierAgent.classify() got an unexpected keyword argument 'history'
+Traceback (most recent call last):
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 146, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 141, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\router.py", line 166, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\.venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 578, in _handle_message
+    result = self.orch.process_message(message.from_user.id, message.text)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Huawei\PycharmProjects\SberIndex-Hackathon-2025_ver2\app.py", line 494, in process_message
+    classification = self.classifier.classify(text, history=history)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ClassifierAgent.classify() got an unexpected keyword argument 'history'
+[2025-06-07 13:36:11,569] INFO: Polling stopped
+[2025-06-07 13:36:11,823] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 13:37:42,384] INFO: Инициализация ChatOpenAI (OpenAI) в качестве LLM
+[2025-06-07 13:37:43,562] INFO: [Классификатор] Инициализирован.
+[2025-06-07 13:37:43,600] INFO: Успешно загружен файл: 1_market_access.parquet
+[2025-06-07 13:37:43,724] INFO: Успешно загружен файл: 2_bdmo_population.parquet
+[2025-06-07 13:37:43,747] INFO: Успешно загружен файл: 3_bdmo_migration.parquet
+[2025-06-07 13:37:43,838] INFO: Успешно загружен файл: 4_bdmo_salary.parquet
+[2025-06-07 13:37:43,893] INFO: Успешно загружен файл: 5_connection.parquet
+[2025-06-07 13:37:44,721] INFO: Успешно загружен файл: mo_ref.xlsx
+[2025-06-07 13:37:44,721] INFO: [Поисковик] Инициализирован.
+[2025-06-07 13:37:44,722] INFO: [Генератор ответов] Инициализирован.
+[2025-06-07 13:37:44,722] INFO: [EDA] Инициализирован.
+[2025-06-07 13:37:44,722] INFO: [Контекст] Инициализирован.
+[2025-06-07 13:37:44,722] INFO: [Оркестратор] Инициализирован.
+[2025-06-07 13:37:44,723] INFO: Start polling
+[2025-06-07 13:37:45,066] INFO: Run polling for bot @ltbemt_bot id=7709142539 - 'ГородION'
+[2025-06-07 13:37:46,760] INFO: Update id=526914689 is handled. Duration 563 ms by bot id=7709142539
+[2025-06-07 13:37:53,859] INFO: [User 5694008986] Запрос: в каком 5 МО самая высокая заработная плата в 2024 году
+[2025-06-07 13:37:53,860] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-07 13:37:55,070] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 13:37:55,078] INFO: [LLM] Получен ответ: valid...
+[2025-06-07 13:37:55,078] INFO: [LLM] Отправка запроса: У тебя есть следующие таблицы с муниципальными данными. Ниже указано имя таблицы и её краткое описан...
+[2025-06-07 13:37:56,093] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 13:37:56,100] INFO: [LLM] Получен ответ: ```json
+{"datasets": ["salary", "mo_ref"]}
+```...
+[2025-06-07 13:37:57,221] INFO: [LLM] Отправка запроса: У тебя есть pandas DataFrame с именем df, который содержит данные из таблиц: salary, mo_ref. Данные ...
+[2025-06-07 13:38:00,200] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 13:38:00,207] INFO: [LLM] Получен ответ: ```python
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['ye...
+[2025-06-07 13:38:00,207] INFO: [GeneratedCode]
+```python
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['year'] == 2024]
+
+# Убираем или заменяем пропуски и бесконечные значения в колонке 'value'
+df_2024['value'] = df_2024['value'].replace([np.inf, -np.inf], np.nan).dropna()
+
+# Приводим значения к целочисленному типу
+df_2024['value'] = df_2024['value'].astype(int)
+
+# Группируем данные по муниципальным образованиям и находим среднюю зарплату
+average_salary_by_mo = df_2024.groupby('municipal_district_name')['value'].mean()
+
+# Сортируем по убыванию средней зарплаты и выбираем топ-5
+top_5_mo = average_salary_by_mo.sort_values(ascending=False).head(5)
+
+# Сохраняем результат в переменную result
+result = top_5_mo
+```
+[2025-06-07 13:38:00,207] INFO: [ExecutingCode]
+import pandas as pd
+import numpy as np
+
+# Фильтруем данные за 2024 год
+df_2024 = df[df['year'] == 2024]
+
+# Убираем или заменяем пропуски и бесконечные значения в колонке 'value'
+df_2024['value'] = df_2024['value'].replace([np.inf, -np.inf], np.nan).dropna()
+
+# Приводим значения к целочисленному типу
+df_2024['value'] = df_2024['value'].astype(int)
+
+# Группируем данные по муниципальным образованиям и находим среднюю зарплату
+average_salary_by_mo = df_2024.groupby('municipal_district_name')['value'].mean()
+
+# Сортируем по убыванию средней зарплаты и выбираем топ-5
+top_5_mo = average_salary_by_mo.sort_values(ascending=False).head(5)
+
+# Сохраняем результат в переменную result
+result = top_5_mo
+[2025-06-07 13:38:01,924] INFO: [LLM] Отправка запроса: Ты аналитик, который отвечает на вопросы о муниципальных данных. На основе запроса пользователя и вы...
+[2025-06-07 13:38:06,339] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 13:38:06,345] INFO: [LLM] Получен ответ: В 2024 году самая высокая средняя заработная плата наблюдается в следующих муниципальных округах (МО...
+[2025-06-07 13:38:06,556] INFO: Update id=526914690 is handled. Duration 12702 ms by bot id=7709142539
+[2025-06-07 13:38:39,945] INFO: [User 5694008986] Запрос: а какая из приведенных на 4 месте
+[2025-06-07 13:38:39,945] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'в каком 5 МО самая высокая з...
+[2025-06-07 13:38:41,126] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 13:38:41,129] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": true}
+```...
+[2025-06-07 13:38:41,130] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-07 13:38:41,826] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 13:38:41,838] INFO: [LLM] Получен ответ: ambiguous...
+[2025-06-07 13:38:41,935] INFO: Update id=526914691 is handled. Duration 1984 ms by bot id=7709142539
+[2025-06-07 13:39:13,676] INFO: [User 5694008986] Запрос: а какой МО из приведенных тобой находится на 4 месте
+[2025-06-07 13:39:13,678] INFO: [LLM] Отправка запроса: Определи, является ли новый запрос уточнением предыдущего.
+Предыдущий: 'а какая из приведенных на 4 ...
+[2025-06-07 13:39:14,859] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 13:39:14,860] INFO: [LLM] Получен ответ: ```json
+{"is_continuation": true}
+```...
+[2025-06-07 13:39:14,860] INFO: [LLM] Отправка запроса: Определи, относится ли запрос к анализу муниципальных данных. Критерии: население, зарплаты, миграци...
+[2025-06-07 13:39:15,379] INFO: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-06-07 13:39:15,384] INFO: [LLM] Получен ответ: ambiguous...
+[2025-06-07 13:39:15,604] INFO: Update id=526914692 is handled. Duration 1936 ms by bot id=7709142539
+[2025-06-07 13:39:30,202] INFO: Polling stopped
+[2025-06-07 13:39:30,444] INFO: Polling stopped for bot @ltbemt_bot id=7709142539 - 'ГородION'

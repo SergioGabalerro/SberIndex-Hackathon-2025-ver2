@@ -199,7 +199,7 @@ def parse_json_response(response_str: str) -> dict:
         return {}
 
 
-def validate_query(query: str) -> bool:
+def validate_query(query: str, history=None) -> bool:
     """
     Быстро проверяем, содержит ли запрос ключевые слова,
     связанные с муниципальными данными. Если нет —
@@ -220,9 +220,8 @@ def validate_query(query: str) -> bool:
         "Ответ только 'valid' или 'ambiguous' без пояснений.\n"
         f"Запрос: '{query}'"
     )
-    response = call_llm(prompt).lower().strip()
+    response = call_llm(prompt, history=history).lower().strip()
     return "valid" in response
-
 
 # === ClassifierAgent: выбираем нужные таблицы по описанию ===
 class ClassifierAgent:
@@ -248,11 +247,10 @@ class ClassifierAgent:
             "Верни ответ ровно в формате JSON: {\"datasets\": [\"имя1\", \"имя2\", …]}"
         )
 
-    def classify(self, query: str) -> dict:
+    def classify(self, query: str, history=None) -> dict:
         prompt = self._build_prompt(query)
-        result = parse_json_response(call_llm(prompt))
+        result = parse_json_response(call_llm(prompt, history=history))
         return result if result.get("datasets") else {"datasets": []}
-
 
 # === KnowledgeSearchAgent: загружаем и объединяем датафреймы ===
 class KnowledgeSearchAgent:
@@ -540,7 +538,6 @@ class OrchestratorAgent:
         )
         response = parse_json_response(call_llm(prompt, history=history))
         return response.get("is_continuation", False)
-
 
 # === TelegramBot (Aiogram) ===
 # === TelegramBot (Aiogram) ===
